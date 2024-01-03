@@ -1,0 +1,387 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+.web_info{
+
+    width: 100%;
+    height: 35px;
+    background-color: #0D2838;
+    display: flex;
+    align-items: center;
+}
+
+.left_nav{
+
+    width: 50%;
+
+}
+.left_nav ul{
+
+    display: flex;
+    align-items: center;
+}
+.left_nav ul li{
+    list-style: none;
+    color: white;
+    margin-left: 50px;
+    
+}
+.right_nav{
+    width: 50%;
+    text-align: right;
+    margin-right: 100px;
+
+}
+.right_nav i{
+    color: white;
+    margin-left: 30px;
+    font-size: larger;
+}
+.main_div{
+    display: flex;
+
+align-items: center;
+justify-content: space-between;
+}
+.logo{
+    width: 25%;
+}
+.logo i{
+    display: none;
+}
+.logo img{
+
+    height: 60px;
+    margin-left: 30px;
+}
+.menu{
+    width: 50%;
+}
+.menu ul{
+    display: flex;
+    align-items: center;
+}
+.menu ul li{
+    list-style: none;
+    margin-right: 40px;
+
+}
+.menu ul li a{
+    color: black;
+}
+
+.buttons{
+    width: 25%;
+}
+.buttons button{
+    float: right;
+    margin-right: 20px;
+    height: 40px;
+    width: 80px;
+    background-color: #1CC3B2 ;
+    border: none;
+    outline: none;
+    color: white;
+}
+nav{
+
+    height: 95px;
+
+    margin-bottom: 0px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+}
+
+/* Navber section Done  */
+
+/* Wallpaper section Start */
+
+
+.poster{
+    margin-top: 0px;
+    height: 95vh;
+    background-image: url("../photos/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+}
+.content{
+    width: 60%;
+    margin: auto;
+
+}
+.content h1{
+    
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 55px;
+    font-weight: bolder;
+}
+
+.content p{
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+/* wallpaper section end 
+
+Guid me right section start */
+
+
+
+
+.guide_me_intro{
+
+    width: 80%;
+    margin: auto;
+    padding-top: 30px;
+
+}
+.guide_me_intro h1{
+    text-align: center;
+    padding-bottom: 30px;
+    font-weight: bold;
+}
+.guide_me_intro p{
+    text-align: center;
+    font-weight: bold;
+}
+
+.options{
+    padding-top: 40px;
+    width: 80%;
+    margin: auto;
+
+
+}
+
+.col_option{
+    background-color: #FFFBFB;
+    margin: 8px;
+    text-align: center;
+    border: 1px solid #C1C1C1;
+    border-radius: 10px;
+
+}
+.col_option:hover{
+    background-color: #1CC3B2;
+    color: white;
+}
+
+.col_option img{
+
+width: 105px;
+height: 105px;
+}
+.col_option h3{
+    font-size: 18px;
+    font-weight: bold;
+}
+.col_option p{
+    font-size: smaller;
+}
+
+
+/* Bangladesh Section Start */
+.section{
+    padding-top: 50px;
+
+    width: 100%;
+
+ 
+}
+.sec_3_content{
+    width: 80%;
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+}
+.bangladesh img{
+    width: 387px;
+}
+.sid{
+
+    margin: auto;
+    text-align: center;
+    font-weight: bold;
+    max-width: 590px;
+  
+}
+
+/* Blog Section Start */
+
+.blog{
+    width: 100%;
+}
+.blog_post{
+
+
+width: 100%;
+margin-bottom: 30px;
+}
+.blog_post button{
+    font-size: 18px;
+    font-weight: bold;
+}
+.btn-dark{
+    width: 150px;
+    padding: 8px;
+    color: white;
+    background-color: #0D2838;
+}
+
+
+
+/* Footer Section */
+
+
+.fotter{
+
+    background-color: #0D2838;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    align-items: center;
+}
+
+.left-fotter{
+    display: flex;
+    padding: 15px;
+}
+
+.fotter-logo{
+    width: 160px;
+    height: 160px;
+    background-color: white;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.fotter-info{
+    color: white;
+
+}
+.fotter-info h1{
+    font-size: 24px;
+}
+.fotter-info p{
+    font-size: 12px;
+}
+
+.right-fotter{
+    height: 100%;
+
+    
+
+
+    
+}
+
+.social img{
+    
+    width: 30px;
+    margin-right: 30px;
+
+}
+.right-fotter h1{
+    color: white;
+}
+
+
+@media screen and (max-width: 880px) {
+ 
+    .web_info{
+        display: none;
+    }
+
+    .main_div{
+        display: inline-block;
+        width: 100%;
+    }
+
+    .logo i{
+        display: block;
+        margin-right: 20px;
+
+    }
+    .menu{
+        display: none;
+    }
+    .logo{
+        
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo img{
+        padding-top: 10px;
+        height: 60px;
+    }
+    .buttons{
+        display: none;
+    }
+    nav{
+        height: 65px;
+    }
+    .content{
+        width: 100%;
+        margin: auto;
+    }
+    .content h1{
+        font-size: 30px;
+    }
+    .content p{
+        font-size: 14px;
+    }
+
+    .sec_3_content{
+        width: 100%;
+        display: block;
+    }
+    .bangladesh img{
+        width: 340px;
+    }
+    .sid h1{
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .sid p{
+        font-size: 12px;
+    }
+    .section{
+        margin-bottom: 60px;
+    }
+    .fotter{
+        display: block;
+    }
+
+    .left-fotter{
+        justify-content: space-between;
+    }
+    .fotter-logo{
+        width: 100px;
+        height: 100px;
+    }
+    .fotter-logo img{
+        width: 100px;
+        height: 100px;
+    }
+
+    .right-fotter h1{
+        font-size: 22px;
+    }
+    
+
+
+  }
+
+

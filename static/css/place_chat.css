@@ -1,0 +1,141 @@
+
+
+.chatbox{
+
+
+    width: 90%;
+    margin: auto;
+    max-width: 300px;
+    height: 450px;
+    border-radius: 10px;
+
+}
+
+.chat-header{
+
+    height: 45px;
+    background-color: #0DAB83;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.logo{
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    border-radius: 50%;
+}
+.logo img{
+    height: 40px;
+    margin: 0px;
+}
+.chat-header p{
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.control{
+    margin-right: 10px;
+
+}
+.control i{
+    margin-right: 5px;
+    color: white;
+    font-size: 18px;
+}
+.chat-body{
+    background-color: #D9D9D9;
+    height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.received-msg{
+    padding: 10px;
+
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+}
+.received-msg i{
+    font-size: 30px;
+    color: white;
+}
+.msg{
+    margin-right: 10px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    max-width: 190px;
+}
+.msg p{
+    text-align: left;
+    padding-top: 3px;
+    padding-left: 5px;
+}
+.send-msg{
+
+    display: flex;
+    justify-content: end;
+}
+.send-msg .msg{
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: right;
+    background-color: transparent;
+    border: 1px #0DAB83 solid;
+    padding: 5px 7px 5px 7px;
+    margin-top: 5px;
+    background-color: #0DAB83;
+}
+.suggeation-msg{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-top: 5px;
+}
+.suggeation-msg .send-msg .msg{
+    border-radius: 20px;
+    padding: 3px;
+    background-color: transparent;
+}
+
+.send-msg-bar{
+    background-color: #282F28;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+}
+.type-msg{
+    width: 95%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.type-msg input{
+height: 30px;
+width: 85%;
+background-color: transparent;
+color: white;
+outline: none;
+border: none;
+
+}
+.type-msg i{
+    color: white;
+}
