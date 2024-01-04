@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+
+{% block link %}
+<link rel="stylesheet" href="{%static './css/places.css'%}">
+{% endblock link %}
+
+
+
+{% block content %}
+    <section class="place-main">
+
+        <div class="src-chat container-fluid">
+
+            <div class="src rounded-pill p-1">
+                <form action="#" class="mt-3 mx-md-2">
+                    <input type="text" placeholder="where are you going? " class="srcbar">
+                    <input type="submit" value="Search" class="srcbutton p-2 rounded-pill text-light">
+                </form>
+
+            </div>
+
+            <div class="chat">
+                <i class="bi bi-robot"></i>
+                <button> Chat bot</button>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="all-places">
+
+        <div class="all-places-content mx-auto">
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div class="larger-view-place">
+                        <img src="{% static './photos/place1.png' %}" alt="">
+                        <div class="place-info">
+                            <h3>Sonargau Musium</h3>
+                            <button>view</button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="larger-view-place small-view-place">
+                            <img src="{% static './photos/kuakata.png' %}" alt="">
+                            <div class="place-info">
+                                <h3>Kuakata Beach</h3>
+                                <button>view</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="larger-view-place small-view-place">
+                            <img src="{% static './photos/place2.png' %}" alt="">
+                            <div class="place-info">
+                                <h3>Ruins of the Buddhist Vihara at paharpur</h3>
+                                <button>view</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    {% endblock content %}
