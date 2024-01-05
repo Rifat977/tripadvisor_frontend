@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+
+{% block link %}
+<link rel="stylesheet" href="{%static './css/hotels.css'%}">
+{% endblock link %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="heading">
+        <h2 class="mt-5">Hotels in Kuakata</h2>
+    </div>
+</div>
+
+
+<div class="container-fluid mb-5">
+    <div class="row mt-5">
+        <div class="col-lg-2 col-md-2">
+            <div class="left-comlumn p-4 shadow border rounded">
+                <p class="">Star Rating</p>
+                <form action="/" class="">
+                    <input type="checkbox" id="#" name="5 star" value="5 star">
+                    <label for="5 star">5 Stars</label> <br>
+                    <input type="checkbox" id="#" name="4 star" value="4 star">
+                    <label for="4 star">4 Stars</label> <br>
+                    <input type="checkbox" id="#" name="3 star" value="3 star">
+                    <label for="3 star">3 Stars</label><br>
+                    <input type="checkbox" id="#" name="2 star" value="2 star">
+                    <label for="2 star">2 Stars</label><br>
+                    <input type="checkbox" id="#" name="1 star" value="1 star">
+                    <label for="1 star">1 Stars</label><br>
+                </form>
+                <p class="mt-3">Review Score</p>
+                <form action="/" class="">
+                    <input type="checkbox" id="#" name="Exceptional 9+" value="Exceptional 9+">
+                    <label for="Exceptional 9+">Exceptional 9+</label> <br>
+                    <input type="checkbox" id="#" name="Very Good 8+" value="Very Good 8+">
+                    <label for="Very Good 8+">Very Good 8+</label> <br>
+                    <input type="checkbox" id="#" name="Good 7+" value="Good 7+">
+                    <label for="Good 7+">Good 7+</label> <br>
+                    <input type="checkbox" id="#" name="Pleasant 6+" value="Pleasant 6+">
+                    <label for="Pleasant 6+">Pleasant 6+</label> <br>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-7 col-md-7 ">
+            <div class="container">
+                <div class="row mb-4 shadow border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-top">
+                            <img src="{%static './photos/4.jpg'%}" class="h-auto w-100 rounded" alt="main img">
+                        </div>
+                        <div class="row">
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="middle-top">
+                            <h4 class="font-weight-bold">Hotel Khan Palace</h4>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-md-3">
+                                <div class="rating">
+                                    <i class="fa-regular fa-star rating-icon"></i>
+                                    <i class="fa-regular fa-star rating-icon"></i>
+                                    <i class="fa-regular fa-star rating-icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Kuakata, Kuakata -</span>
+                                <span><a href="#">View on map</a></span>
+                            </div>
+                        </div>
+
+
+                        <div class="space mt-2">
+                            <p>Car Park</p>
+                            <p>Free Wifi In All Rooms</p>
+                            <p>+6</p>
+                        </div>
+                        <p class="middle-text mt-3 h6">"All Over Very Good Service"</p>
+                        <p class="middle-text-last mt-3 text-center">Distance cover for you sight 3km</p>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <div class="row no-gutters">
+                            <div class="col-12">
+                                <h6>Very Good</h6>
+                                <p>21 Reviews</p>
+                            </div>
+                        </div>
+                        <div class="">
+                            <i class="fa-regular fa-3x fa-circle-check"></i>
+                        </div>
+                        <div class="right-content-bottom mt-2">
+                            <h5 class="font-weight-bold">Average Per Night</h5>
+                            <h5 class="font-weight-bold">1500 Tk.</h5>
+                            <button class="btn btn-primary rounded text-light px-2">Check Abailability</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4 shadow border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-top">
+                            <img src="{%static './photos/4.jpg'%}" class="h-auto w-100 rounded" alt="main img">
+                        </div>
+                        <div class="row">
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="middle-top">
+                            <h4 class="font-weight-bold">Hotel Khan Palace</h4>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-md-3">
+                                <div class="rating">
+                                    <i class="fa-regular fa-star rating-icon"></i>
+                                    <i class="fa-regular fa-star rating-icon"></i>
+                                    <i class="fa-regular fa-star rating-icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Kuakata, Kuakata -</span>
+                                <span><a href="#">View on map</a></span>
+                            </div>
+                        </div>
+
+
+                        <div class="space mt-2">
+                            <p>Car Park</p>
+                            <p>Free Wifi In All Rooms</p>
+                            <p>+6</p>
+                        </div>
+                        <p class="middle-text mt-3 h6">"All Over Very Good Service"</p>
+                        <p class="middle-text-last mt-3 text-center">Distance cover for you sight 3km</p>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <div class="row no-gutters">
+                            <div class="col-12">
+                                <h6>Very Good</h6>
+                                <p>21 Reviews</p>
+                            </div>
+                        </div>
+                        <div class="">
+                            <i class="fa-regular fa-3x fa-circle-check"></i>
+                        </div>
+                        <div class="right-content-bottom mt-2">
+                            <h5 class="font-weight-bold">Average Per Night</h5>
+                            <h5 class="font-weight-bold">1500 Tk.</h5>
+                            <button class="btn btn-primary rounded text-light px-2">Check Abailability</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4 shadow border rounded p-3">
+                    <div class="col-md-4">
+                        <div class="image-top">
+                            <img src="{%static './photos/4.jpg'%}" class="h-auto w-100 rounded" alt="main img">
+                        </div>
+                        <div class="row">
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                            <div class="col-4 mt-2">
+                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="middle-top">
+                            <h4 class="font-weight-bold">Hotel Khan Palace</h4>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-md-3">
+                                <div class="rating">
+                                    <i class="fa-regular fa-star rating-icon"></i>
+                                    <i class="fa-regular fa-star rating-icon"></i>
+                                    <i class="fa-regular fa-star rating-icon"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Kuakata, Kuakata -</span>
+                                <span><a href="#">View on map</a></span>
+                            </div>
+                        </div>
+
+
+                        <div class="space mt-2">
+                            <p>Car Park</p>
+                            <p>Free Wifi In All Rooms</p>
+                            <p>+6</p>
+                        </div>
+                        <p class="middle-text mt-3 h6">"All Over Very Good Service"</p>
+                        <p class="middle-text-last mt-3 text-center">Distance cover for you sight 3km</p>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <div class="row no-gutters">
+                            <div class="col-12">
+                                <h6>Very Good</h6>
+                                <p>21 Reviews</p>
+                            </div>
+                        </div>
+                        <div class="">
+                            <i class="fa-regular fa-3x fa-circle-check"></i>
+                        </div>
+                        <div class="right-content-bottom mt-2">
+                            <h5 class="font-weight-bold">Average Per Night</h5>
+                            <h5 class="font-weight-bold">1500 Tk.</h5>
+                            <button class="btn btn-primary rounded text-light px-2">Check Abailability</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="container">
+                <div class="col-lg-12 p-3 col-md-12 rounded border" style="background-color: #186BCB29; display: flex; flex-direction: column; align-items: center;">
+                    <h3 class="border-bottom border-dark">Selected</h3>
+                    <ul>
+                        <li>Fatrar Char.</li>
+                        <li>Gangamati Reserved Forest.</li>
+                        <li>Foods.</li>
+                        <li>Buffet.</li>
+                        <li>Budget = 5000 tk.</li>
+                    </ul>
+                    <button class="btn btn-success rounded-pill">Submit</button>
+                </div>
+                
+                <div class="col-lg-12 mt-5 p-2 bottom-right">
+                    <h4 class="">Plan</p>
+                        <div>
+                            <h5>Day 1:Arrival in Kuakata</h5>
+                            <ul>
+                                <li>Arrive in Kuakata, settle in at Hotel Grand Safa Inn.</li>
+                                <li>Explore the nearby Kuakata Beach and enjoy the sunset view from the beach.</li>
+                                <li>Budget for meals: Try local eateries and street food options.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5>Day 2: Trip to Fatrar Char</h5>
+                            <ul>
+                                <li>Wake up early and have breakfast at the hotel.</li>
+                                <li>Arrange transportation to Fatrar Char. You might need to hire a local boat or
+                                    take a group tour.</li>
+                                <li>Spend the day exploring Fatrar Char's natural beauty, walking along the shores,
+                                    and enjoying the tranquility.</li>
+                                <li>Capture some memorable photos of the picturesque landscapes.</li>
+                                <li>Return to Kuakata in the late afternoon.</li>
+                                <li>Evening relaxation at the hotel or a leisurely stroll around Kuakata.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5>Day 3: Local Sightseeing and Departure</h5>
+                            <ul>
+                                <li>Have breakfast and check out of the hotel.</li>
+                                <li>Visit the Kuakata Buddhist Temple and enjoy the view of the Bay of Bengal.</li>
+                                <li>If time allows, you can also visit the Lebur Char and Gangamati Reserved Forest.
+                                </li>
+                                <li>Lunch at a local restaurant.</li>
+                                <li>Depending on your departure time, you can spend some more time at the beach or
+                                    exploring the local markets.</li>
+                                <li>Depart from Kuakata with wonderful memories.</li>
+                            </ul>
+
+                        </div>
+                        <div>
+                            <h5>Important Tips</h5>
+                            <ul>
+                                <li>Be sure to check the local weather forecast before your trip and pack
+                                    accordingly.</li>
+                                <li>Since your budget is limited, consider trying local street food and eateries for
+                                    cost-effective meals.</li>
+                                <li>Always carry drinking water, sunscreen, and insect repellent during your outdoor
+                                    activities.</li>
+                            </ul>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
