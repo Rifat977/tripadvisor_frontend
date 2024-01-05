@@ -360,6 +360,7 @@ Guid me right section start */
   }
   .fotter {
     display: block;
+    width: 100%;
   }
 
   .left-fotter {
@@ -376,5 +377,14 @@ Guid me right section start */
 
   .right-fotter h1 {
     font-size: 22px;
+  }
+}
+
+
+@media screen and (max-width: 444px) {
+
+
+  .left-fotter{
+    display: block;
   }
 }

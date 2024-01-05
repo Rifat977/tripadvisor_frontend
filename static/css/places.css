@@ -31,7 +31,7 @@
 
 
 .src form input{
-    /* height: 35px; */
+    height: 35px;
     border-radius: 20px;
     border: none;
     outline:none;
@@ -115,6 +115,7 @@
 }
 .small-view-place{
     height: 220px;
+    width: 100%;
 }
 .small-view-place img{
     height: 220px;

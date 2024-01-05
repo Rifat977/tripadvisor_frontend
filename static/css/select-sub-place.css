@@ -36,6 +36,7 @@ width: 530px;
     background-color: #186BCB29;
     width: 200px;
     height: 241px;
+    min-width: 200px;
 }
 .header-des{
     border-bottom: 2px solid black;
@@ -128,6 +129,7 @@ width: 530px;
     .src-chat{
         width: 60%;
     }
+
     
     }
     
@@ -156,6 +158,13 @@ width: 530px;
             }
 
 
+@media screen and (max-width: 1000px) {
+
+    .place{
+        display: block;
+    }
+}
+
 @media screen and (max-width: 770px) {
     .selected-place{
         width: 100%;
@@ -176,12 +185,20 @@ width: 530px;
      }
 
     .place-img{
+        width: 100%;
         margin-bottom: 10px;
     }
     .description{
         width: 100%;
     }
+    .sub-place{
+        display: block;
+    }
 
+    .selected-card{
+        width: 100%;
+        margin-bottom: 10px;
+    }
      
                         
 }
