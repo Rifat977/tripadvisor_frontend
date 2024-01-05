@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from .views import *
 urlpatterns = [
-   path('', home, name="Rendiring Homepage"),
-   path('places', places, name="Rendiring places"),
+   path('', home, name="home"),
+   path('places', places, name="places"),
    path('chat', chat, name="Rendiring place chat page"),
    path('sub_place', sub_place, name="Rendiring place chat page"),
    path('select_sub_place', sub_sub_place, name="Rendiring place chat page"),

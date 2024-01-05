@@ -55,13 +55,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav text-uppercase font-weight-bold">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Tour</a>
+                        <a class="nav-link" href="{% url 'places' %}">Tour</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Blog</a>
+                        <a class="nav-link" href="{% url 'blog' %}">Blog</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Dashboard</a>
@@ -69,7 +69,9 @@
                 </ul>
             </div>
             <div class="ml-auto buttons text-center">
-                <button class="p-2 rounded" type="button">LOGIN <i class="bi bi-arrow-right"></i></button>
+                <a href="{% url 'login' %}">
+                    <button class="p-2 rounded" type="button">LOGIN <i class="bi bi-arrow-right"></i></button>
+                </a>
             </div>
         </div>
     </nav>
