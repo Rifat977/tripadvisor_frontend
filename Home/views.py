@@ -40,3 +40,7 @@ def sub_sub_place(request):
 
 def sub_place_chatbox(request):
     return render(request,'select_sub_place_chat.html')
+
+
+def event(request):
+    return render(request, 'event.html')

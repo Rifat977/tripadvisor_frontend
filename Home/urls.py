@@ -15,5 +15,6 @@ urlpatterns = [
    path('blog', blog, name="blog"),
 
    path('info', info, name="info"),
+   path('event', event, name="event")
 
 ]
