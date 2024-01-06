@@ -1,7 +1,7 @@
 from django.shortcuts import render
-
-
-
+from django.http import JsonResponse
+import requests
+from datetime import datetime 
 
 def home(request):
     return render(request,'home.html')
@@ -44,3 +44,27 @@ def sub_place_chatbox(request):
 
 def event(request):
     return render(request, 'event.html')
+
+def weather(request):
+    return render(request, 'weather.html')
+
+def get_weather(request):
+    input_date = request.GET.get('selected_date')
+    city = request.GET.get('selected_city')
+
+    api_key = "69a115bda020439bbab164500240601"
+    base_url = "http://api.weatherapi.com/v1/history.json?"
+
+    year, month, day = map(int, input_date.split('-'))
+    date = datetime(year, month, day)
+    
+    formatted_date = date.strftime('%Y-%m-%d')
+
+    complete_url = f"{base_url}key={api_key}&q={city}&dt={formatted_date}"
+    
+    response = requests.get(complete_url)
+    
+    data = response.json()
+    
+
+    return JsonResponse({'weather_data': data})

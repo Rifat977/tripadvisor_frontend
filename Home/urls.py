@@ -15,6 +15,8 @@ urlpatterns = [
    path('blog', blog, name="blog"),
 
    path('info', info, name="info"),
-   path('event', event, name="event")
+   path('event', event, name="event"),
+   path('weather', weather, name="weather"),
+   path('get_weather/', get_weather, name='get_weather'),
 
 ]
