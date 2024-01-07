@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static "./css/places.css" %}">
+<link rel="stylesheet" href="{% static "./css/select_place.css" %}">
+
+{% endblock link %}
+
+
+
+{% block content %}
+
+
+
+
+
+    <section class="place-main">
+
+        <div class="src-chat  mb-3">
+
+            <div class="src rounded-pill p-2  m-auto">
+                <form action="#" class="m-0">
+                    <input type="text" placeholder="where are you going? " class="srcbar m-0">
+                    <input type="submit" value="Search" class="srcbutton">
+
+                </form>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+    <section class="all-places">
+
+        <div class="all-places-content m-auto">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="larger-view-place">
+                        <img src="{% static "./photos/cox's_bazar.png" %}" alt="">
+                        <div class="cheakbox">
+                            <i class="bi bi-check-circle"></i>
+          
+                        </div>
+                        <div class="place-info">
+                            <h3>Cox's Bazar </h3>
+                            <button>view</button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="larger-view-place small-view-place">
+                            <img src="{% static "./photos/inani.png" %}" alt="">
+                            <div class="cheakbox">
+                                <i class="bi bi-check-circle"></i>
+               
+                            </div>
+                            <div class="place-info">
+                                <h3>Kuakata Beach</h3>
+                                <button>view</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="larger-view-place small-view-place">
+                            <img src="{% static "./photos/kuakata.png" %}" alt="">
+                            <div class="cheakbox">
+                            
+                                <i class="bi bi-check-circle-fill"></i>
+                            </div>
+                            <div class="place-info">
+                                <h3>Ruins of the Buddhist Vihara at paharpur</h3>
+                                <button>view</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="next-btn">
+
+            <button>Next</button>
+        </div>
+    </section>
+    
+
+
+    {% endblock content %}

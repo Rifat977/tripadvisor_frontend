@@ -1,0 +1,67 @@
+.navbar-brand {
+  margin-right: auto;
+}
+
+.navbar-nav {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav .nav-item {
+  margin-right: 40px;
+}
+
+.login-section {
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px;
+}
+
+.login-card {
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-image {
+  flex: 1;
+  text-align: center;
+}
+
+.login-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+input::placeholder {
+  font-size: 0.8rem;
+}
+
+.custom-hr {
+  border-top: 2px solid #000;
+  width: 100%;
+}
+
+.social-icons {
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+.new-user-link {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.otp-input-group {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.otp-input {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+}

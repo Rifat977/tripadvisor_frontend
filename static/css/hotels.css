@@ -1,0 +1,173 @@
+.left-comlumn p {
+  font-weight: 600;
+}
+
+.top-right {
+  border-radius: 6px;
+  opacity: 0.8;
+  background-color: rgba(24, 107, 203, 0.16);
+}
+
+.top-right h3 {
+  text-decoration: underline;
+}
+
+.top-right li {
+  font-size: 15px;
+  line-height: 26px;
+  font-weight: 500;
+}
+
+.bottom-right {
+  border: 2px solid black;
+  border-radius: 15px;
+}
+
+.bottom-right h5 {
+  line-height: 25px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.bottom-right li {
+  line-height: 19px;
+  font-size: 11px;
+}
+
+.mycard {
+  display: flex;
+  height: auto;
+}
+
+/* .left-image {
+        width: 30%;
+        height: auto;
+
+    } */
+
+.images-bottom {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.images-bottom img {
+  width: 33.3%;
+}
+
+.images-bottom .seeall {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 33.3%;
+  background-color: rgb(190, 243, 225);
+}
+
+.seeall p {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.left-content {
+  width: 35%;
+}
+
+.right-content h2 {
+  font-size: 16px;
+}
+
+.rating-box {
+  display: flex;
+}
+
+.rating-box a {
+  font-size: 14px;
+}
+
+.space {
+  display: flex;
+}
+
+.space p {
+  font-size: 11px;
+  border: 1px solid rgb(255, 232, 232);
+  margin: 5px;
+  padding: 3px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.rating-icon {
+  font-size: 12px;
+  margin: 3px;
+  color: #ff9529;
+}
+
+.rating {
+  display: flex;
+}
+
+.top_right_content {
+  display: flex;
+}
+
+.review-text h5 {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.review-text p {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.middle-text {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.middle-text-last {
+  font-family: sans-serif;
+  font-size: 15px;
+  background-color: #5392f952;
+  border-radius: 10px;
+  padding: 3px;
+  font-weight: 600;
+}
+
+.right-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+}
+
+.right-content-bottom {
+  padding: 2px;
+}
+
+.right-content-bottom p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.right-content-bottom h5 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.right-content-bottom button {
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
+  transition: 0.8;
+}
+
+.right-content-bottom button:hover {
+  background-color: azure;
+  opacity: 1.5;
+}
+
+.right-content-bottom button a {
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}

@@ -1,0 +1,196 @@
+
+/* heder portion start */
+
+
+.place-main{
+    width: 100%;
+}
+
+
+.src-chat{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    margin-top: 60px;
+}
+.src{
+    border: 1px solid;
+    /* padding: 5px; */
+    border-radius: 20px;
+}
+.srcbar{
+    width: 350px;
+}
+
+.srcbutton{
+    width: 100px;
+    background-color: #3D8ED9;
+    font-weight: bold;
+}
+
+
+.src form input{
+    height: 35px;
+    border-radius: 20px;
+    border: none;
+    outline:none;
+}
+.chat{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat i{
+    font-size: xx-large;
+}
+.chat button{
+
+    margin-left: 15px;
+    height: 30px;
+    width: 100px;
+    border-radius: 20px;
+    background-color: black;
+    color: white;
+
+}
+
+
+/* all places content  */
+
+.all-places{
+    /* padding-top: 30px; */
+    /* width: 100%; */
+}
+/* .all-places-content{
+    width: 90%;
+    margin: auto;
+} */
+
+.larger-view-place{
+    position: relative;
+    overflow: hidden;
+    height: 450px;
+    max-width: 500px;
+    margin: auto;
+}
+.larger-view-place img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    margin: 0;
+    padding: 0;
+ 
+    height: 450px;
+
+
+}
+.place-info{
+    width: 87%;
+    position: absolute;
+    bottom: 2px;
+    display: flex;
+    left: 4px;
+    justify-content: space-between;
+    align-items: center;
+}
+.place-info button{
+    height: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: rgba(8, 8, 8, 0.7);
+    border: 1px transparent;
+    border-radius: 20px;
+    color: white;
+    
+ 
+
+}
+
+.place-info h3{
+    color: white;
+    margin-left: 10px;
+}
+.small-view-place{
+    height: 220px;
+    width: 100%;
+}
+.small-view-place img{
+    height: 220px;
+    width: 100%;
+}
+
+
+@media screen and (min-width: 1250px) {
+
+.all-places-content{
+    width: 70%;
+}
+.src-chat{
+    width: 75%;
+}
+.next-btn{
+    width: 70%;
+}
+
+
+}
+
+@media screen and (min-width: 1700px) {
+
+    .all-places-content{
+        width: 65%;
+    }
+    .src-chat{
+        width: 70%;
+    }
+
+    .next-btn{
+        width: 65%;
+    }
+    
+    
+    }
+    
+
+@media screen and (min-width: 1800px) {
+
+        .all-places-content{
+            width: 60%;
+        }
+        .src-chat{
+            width: 65%;
+        }
+        .next-btn{
+            width: 55%;
+        }
+        
+        
+        }
+
+@media screen and (max-width: 630px) {
+
+    .src-chat{
+        display: block;
+    }
+    .src{
+
+        width: 100%;
+    }
+    .src form{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .chat{
+        justify-content: end;
+        margin-top: 20px;
+
+    }
+            
+            
+            }
+
+

@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% load static %} {% block link %}
+<link rel="stylesheet" href="{%static './css/register.css'%}" />
+{% endblock link %} {% block content %}
+
+<div class="container login-section mt-4">
+  <div class="row">
+    <div class="col-md-7 col-12">
+      <div class="shadow p-4 text-center">
+        <h3 class="font-weight-bold">Enter Your OTP</h3>
+        <form method="POST" action="/auth/cheak_otp/{{user}}">
+          {% csrf_token %}
+          <div class="container mt-4">
+            <div class="otp-input-group font-weight-bold">
+              <p class="mt-1">OTP</p>
+              <input
+                type="text"
+                class="form-control otp-input"
+                maxlength="1"
+                name="otp_1"
+              />
+              <input
+                type="text"
+                class="form-control otp-input"
+                maxlength="1"
+                name="otp_2"
+              />
+              <input
+                type="text"
+                class="form-control otp-input"
+                maxlength="1"
+                name="otp_3"
+              />
+              <input
+                type="text"
+                class="form-control otp-input"
+                maxlength="1"
+                name="otp_4"
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn px-4 mt-2 font-weight-bold text-white rounded"
+            style="background-color: #0d2838"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

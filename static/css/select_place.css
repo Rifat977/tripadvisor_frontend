@@ -1,0 +1,107 @@
+
+.small-view-place{
+    margin-bottom: 5px;
+}
+.cheakbox{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.cheakbox i{
+    font-size: 20px;
+}
+
+.next-btn{
+    margin: auto;
+    margin-top: 20px;
+    width: 85%;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 20px;
+    
+}
+
+.next-btn button{
+    width: 100px;
+    padding: 5px 15px 5px 15px;
+    background-color: #006CFD;
+    border: 1px solid transparent;
+    outline: none;
+    border-radius: 5px;
+    color: white;
+
+}
+
+
+@media screen and (min-width: 1250px) {
+
+    .all-places-content{
+        width: 70%;
+    }
+    .src-chat{
+        width: 75%;
+    }
+    .next-btn{
+        width: 70%;
+    }
+    
+    
+    }
+    
+    @media screen and (min-width: 1700px) {
+    
+        .all-places-content{
+            width: 65%;
+        }
+        .src-chat{
+            width: 70%;
+        }
+    
+        .next-btn{
+            width: 65%;
+        }
+        
+        
+        }
+        
+    
+    @media screen and (min-width: 1800px) {
+    
+            .all-places-content{
+                width: 60%;
+            }
+            .src-chat{
+                width: 65%;
+            }
+            .next-btn{
+                width: 55%;
+            }
+            
+            
+            }
+    
+    @media screen and (max-width: 630px) {
+    
+        .src-chat{
+            display: block;
+        }
+        .src{
+    
+            width: 100%;
+        }
+        .src form{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .chat{
+            justify-content: end;
+            margin-top: 20px;
+    
+        }
+                
+                
+                }
+    
+    
+    

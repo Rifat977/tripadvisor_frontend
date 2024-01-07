@@ -1,0 +1,40 @@
+
+.content p{
+
+    font-size: 15px;
+    font-weight: normal;
+}
+
+
+.selected-card{
+
+    margin-top: 0px;
+}
+
+@media screen and (max-width: 770px) {
+.selected-card{
+    margin: auto;
+    width: 100%;
+    margin-bottom: 5px;
+}
+}
+
+@media screen and (max-width: 1000px) {
+    .selected-card{
+        margin: auto;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .place{
+        height: auto;
+    }
+    .place-img{
+        width: 100%;
+    }
+    .place-img img {
+        width: 100%;
+    }
+
+}
+
+

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+
+{% block link %}
+<link rel="stylesheet" href="{%static './css/blog.css'%}">
+<title>All Blogs</title>
+{% endblock link %}
+
+{% block content %}
+
+<div class="">
+    <div class="cover-image" style="background: url('{% static "photos/cover.png" %}') center/cover no-repeat;">
+        <div class="profile-container">
+            <img src="{%static './photos/profile.png'%}" alt="Profile Image" class="profile-image">
+            <div class="profile-details">
+                <h4 class="font-weight-bold">Nazmul Hoda</h4>
+                <p>example@email.com</p>
+                <p>123 Street, City</p>
+            </div>
+            <div class="profile-rating-parent px-2">
+                <div class="profile-rating" id="profile-rating">
+                </div>
+                <div class="total-review" id="">
+                    <small>Total Review</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <button onclick="window.location.href='/admin/blog/blog/add/';" class="btn create-blog-button py-2">Create Blog</button>
+</div>
+
+<div class=" blog-posts mt-5">
+    <h2 class="text-center myheading mb-5 border border-dark mx-auto p-2 rounded"
+        style="font-weight: 900; max-width: 18rem;">Blog Post</h2>
+    <div class="row">
+
+
+        {% for blog in blogs %}
+
+        <div class="col-lg-4 col-md-6">
+            <div class="p-2 m-3 separate_colunm">
+                <div class="card shadow border rounded p-3 card_info">
+                    <img src="{%static './photos/profile.png'%}" class="card-img-top d-block mx-auto w-25" alt="card-image">
+                    <h3 class="card-title  mt-4 pt-5">{{blog.title}}</h3>
+                    <p>{{blog.description|slice:":200"}}</p>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+
+
+    
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function createStarRating(rating) {
+            const ratingContainer = document.getElementById('profile-rating');
+            ratingContainer.innerHTML = '';
+
+            const totalRating = document.createElement('h5');
+            totalRating.classList.add('total-rating', 'mr-2', 'fw-bold', 'mt-2');
+            totalRating.textContent = `${rating}`;
+            ratingContainer.appendChild(totalRating);
+
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('i');
+                star.classList.add('fas', 'fa-star', 'star');
+
+                if (i <= rating) {
+                    star.classList.add('rated');
+                }
+
+                ratingContainer.appendChild(star);
+            }
+        }
+
+        createStarRating(4.5);
+    });
+</script>
+{% endblock script %}
