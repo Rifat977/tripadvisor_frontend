@@ -13,14 +13,23 @@
 <div class="">
     <div class="cover-image" style="background: url('{% static "photos/cover.png" %}') center/cover no-repeat;">
         <div class="profile-container">
-            <img src="{%static './photos/profile.png'%}" alt="Profile Image" class="profile-image">
+            {% if user.profile %}
+            <img src="{{user.profile.url}}" alt="Profile Image" class="profile-image">
+                {% else %}
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJuWCfLXnReWnUhdrkX-BFp9rpchx-IdzI1g&usqp=CAU" alt="Profile Image" class="profile-image">
+            {% endif %}
+            
             <div class="profile-details">
-                <h4 class="font-weight-bold">Nazmul Hoda</h4>
-                <p>example@email.com</p>
-                <p>123 Street, City</p>
+                <h4 class="font-weight-bold">{{user.first_name}} {{user.last_name}}</h4>
+                <p>{{user.email}}</p>
+                {% if user.address %}
+                <p>{{user.address}}</p>
+                {% endif %}
+                
             </div>
             <div class="profile-rating-parent px-2">
                 <div class="profile-rating" id="profile-rating">
+
                 </div>
                 <div class="total-review" id="">
                     <small>Total Review</small>
@@ -39,34 +48,54 @@
             </h4>
             <hr>
 
-            <form action="" method="post" class="mx-md-5 p-md-5">
+            <form action="/profile" method="post" class="mx-md-5 p-md-5" enctype="multipart/form-data">
                 {% csrf_token %}
 
                 <div class="form-group row">
-                    <label for="name" class="col-sm-3 col-form-label">Name:</label>
+                    <label for="name" class="col-sm-3 col-form-label">First Name:</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="name" name="first_name" required 
+                        {% if user.first_name %}
+                        value = {{user.first_name}}
+                        {% endif %}
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="name" class="col-sm-3 col-form-label">Last Name:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="name" name="last_name" required 
+                        {% if user.last_name %}
+                        value = {{user.last_name}}
+                        {% endif %}
+                        >
                     </div>
                 </div>
 
                 <div class="form-group row mt-3">
                     <label for="image" class="col-sm-3 col-form-label">Upload Image:</label>
                     <div class="col-sm-9">
-                        <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
+                        <input type="file" class="form-control-file" id="image" name="profile" >
                     </div>
                 </div>
 
                 <div class="form-group row mt-3">
                     <label for="details" class="col-sm-3 col-form-label">Details:</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" id="details" name="details" rows="4" required></textarea>
+                        <textarea class="form-control" id="details" name="details" rows="4" required>{% if user.address %}{{user.address}}{% endif %}</textarea>
                     </div>
                 </div>
 
                 <div class="form-group row mt-3">
                     <label for="rating" class="col-sm-3 col-form-label">Rating:</label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required>
+                        <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" required
+                        
+                        {% if user.ratting %}
+                        value = {{user.ratting}}
+                        {% endif %}
+                        >
                     </div>
                 </div>
 

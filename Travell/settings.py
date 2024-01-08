@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,17 +32,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 
 
     #Django APP
 
     'Home',
+    'authentication',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -128,8 +132,21 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = 'static/'
+MEDIA_ROOT = 'media/'
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # Example: 'static' folder in your project's root directory
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+AUTH_USER_MODEL = 'authentication.User'
+
+
+#Email Configuration
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587 #465
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = True

@@ -1,49 +1,61 @@
-{% extends "base.html" %}
-
-{% load static %}
-
-
-
-{% block link %}
-<link rel="stylesheet" href="{%static './css/register.css'%}">
-{% endblock link %}
-
-{% block content %}
+{% extends "base.html" %} {% load static %} {% block link %}
+<link rel="stylesheet" href="{%static './css/register.css'%}" />
+{% endblock link %} {% block content %}
 
 <div class="container login-section mt-4">
-    <div class="row">
-        <div class="col-md-7 col-12">
-            <div class="shadow p-4 text-center">
-                <h3 class="font-weight-bold">Create Account</h3>
-                <form>
-                    <div class="form-group mt-5">
-                        <input type="text" class="form-control" id="username" name="username"
-                            placeholder="Enter Your Email">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="password" name="password"
-                            placeholder="Enter Your Password">
-                    </div>
-                    <button type="submit" class="btn px-4 mt-2 font-weight-bold text-white rounded"
-                        style="background-color: #0D2838;">Submit</button>
-                    <div class="container mt-4">
-                        <div class="otp-input-group font-weight-bold">
-                            <p class="mt-1">OTP</p>
-                            <input type="text" class="form-control otp-input" maxlength="1" />
-                            <input type="text" class="form-control otp-input" maxlength="1" />
-                            <input type="text" class="form-control otp-input" maxlength="1" />
-                            <input type="text" class="form-control otp-input" maxlength="1" />
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-block font-weight-bold text-white mt-3"
-                        style="background-color: #3B54F7;">Create Account</button>
-                </form>
-            </div>
-        </div>
-        <div class="col-5">
-            Demo
-        </div>
+  <div class="row">
+    <div class="col-md-7 col-12">
+      <div class="shadow p-4 text-center">
+        <h3 class="font-weight-bold">Create Account</h3>
+        <form method="POST" action="/auth/register">
+          {% csrf_token %}
+          <div class="form-group mt-5">
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              name="email"
+              placeholder="Enter Your Email"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="Enter Your Password"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="first_name"
+              name="first_name"
+              placeholder="Enter Your First Name"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="last_name"
+              name="last_name"
+              placeholder="Enter Your Last Name"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn px-4 mt-2 font-weight-bold text-white rounded"
+            style="background-color: #0d2838"
+          >
+            NEXT
+          </button>
+        </form>
+      </div>
     </div>
-
+    <div class="col-5">Demo</div>
+  </div>
 </div>
 {% endblock content %}

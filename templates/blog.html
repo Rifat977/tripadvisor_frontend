@@ -6,6 +6,7 @@
 
 {% block link %}
 <link rel="stylesheet" href="{%static './css/blog.css'%}">
+<title>All Blogs</title>
 {% endblock link %}
 
 {% block content %}
@@ -31,7 +32,7 @@
 </div>
 
 <div class="container">
-    <button class="btn create-blog-button py-2">Create Blog</button>
+    <button onclick="window.location.href='/admin/blog/blog/add/';" class="btn create-blog-button py-2">Create Blog</button>
 </div>
 
 <div class=" blog-posts mt-5">
@@ -39,78 +40,27 @@
         style="font-weight: 900; max-width: 18rem;">Blog Post</h2>
     <div class="row">
 
+
+        {% for blog in blogs %}
+
         <div class="col-lg-4 col-md-6">
             <div class="p-2 m-3 separate_colunm">
                 <div class="card shadow border rounded p-3 card_info">
                     <img src="{%static './photos/profile.png'%}" class="card-img-top d-block mx-auto w-25" alt="card-image">
-                    <h3 class="card-title  mt-4 pt-5">Blog Post 1</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, sed. Doloremque
-                        laboriosam temporibus, aliquid natus inventore iste praesentium. Temporibus, dicta?</p>
+                    <h3 class="card-title  mt-4 pt-5">{{blog.title}}</h3>
+                    <p>{{blog.description|slice:":200"}}</p>
                 </div>
             </div>
         </div>
 
+        {% endfor %}
 
-
-
-        <div class="col-lg-4 col-md-6">
-            <div class="p-2 m-3 separate_colunm">
-                <div class="card shadow rounded p-3 card_info">
-                    <img src="{%static './photos/profile.png'%}" class="card-img-top d-block mx-auto w-25" alt="card-image">
-                    <h3 class="card-title  mt-4 pt-5">Blog Post 1</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, sed. Doloremque
-                        laboriosam temporibus, aliquid natus inventore iste praesentium. Temporibus, dicta?</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="p-2 m-3 separate_colunm">
-                <div class="card shadow rounded p-3 card_info">
-                    <img src="{%static './photos/profile.png'%}" class="card-img-top d-block mx-auto w-25" alt="card-image">
-                    <h3 class="card-title  mt-4 pt-5">Blog Post 1</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, sed. Doloremque
-                        laboriosam temporibus, aliquid natus inventore iste praesentium. Temporibus, dicta?</p>
-                </div>
-            </div>
-        </div>
     </div>
-    <div class="row">
-
-        <div class="col-lg-4 col-md-6">
-            <div class="p-2 m-3 separate_colunm">
-                <div class="card shadow rounded p-3 card_info">
-                    <img src="{%static './photos/profile.png'%}" class="card-img-top d-block mx-auto w-25" alt="card-image">
-                    <h3 class="card-title  mt-4 pt-5">Blog Post 1</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, sed. Doloremque
-                        laboriosam temporibus, aliquid natus inventore iste praesentium. Temporibus, dicta?</p>
-                </div>
-            </div>
-        </div>
 
 
 
 
-        <div class="col-lg-4 col-md-6">
-            <div class="p-2 m-3 separate_colunm">
-                <div class="card shadow rounded p-3 card_info">
-                    <img src="{%static './photos/profile.png'%}" class="card-img-top d-block mx-auto w-25" alt="card-image">
-                    <h3 class="card-title  mt-4 pt-5">Blog Post 1</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, sed. Doloremque
-                        laboriosam temporibus, aliquid natus inventore iste praesentium. Temporibus, dicta?</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="p-2 m-3 separate_colunm">
-                <div class="card shadow rounded p-3 card_info">
-                    <img src="{%static './photos/profile.png'%}" class="card-img-top d-block mx-auto w-25" alt="card-image">
-                    <h3 class="card-title  mt-4 pt-5">Blog Post 1</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, sed. Doloremque
-                        laboriosam temporibus, aliquid natus inventore iste praesentium. Temporibus, dicta?</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </div>
 
 {% endblock content %}

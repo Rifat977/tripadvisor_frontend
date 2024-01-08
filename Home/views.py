@@ -1,19 +1,19 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+from datetime import datetime
+
 import requests
-from datetime import datetime 
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
+
+from authentication.models import User
+from blog.models import *
+
+from .models import *
+
 
 def home(request):
-    return render(request,'home.html')
-
-def login(request):
-    return render(request, 'login.html')
-
-def register(request):
-    return render(request, 'register.html')
-
-def blog(request):
-    return render(request, 'blog.html')
+    blogs = Blog.objects.all().order_by('-id')[:5]
+    return render(request,'home.html', context={'blogs':blogs})
 
 def hotels(request):
     return render(request, 'hotels.html')
@@ -43,7 +43,16 @@ def sub_place_chatbox(request):
 
 
 def event(request):
-    return render(request, 'event.html')
+    events = Events.objects.all().order_by('-id')
+    return render(request, 'event.html',context={'events':events})
+
+def event_view(request,pk):
+    try:
+        event = Events.objects.get(id=pk)
+    except(ObjectDoesNotExist):
+        return redirect('/event')
+    
+    return render(request,'events_view.html', context={'event':event})
 
 def weather(request):
     return render(request, 'weather.html')
@@ -68,3 +77,35 @@ def get_weather(request):
     
 
     return JsonResponse({'weather_data': data})
+
+
+
+def profile(request):
+
+    if request.user.is_authenticated:
+
+        if request.method == 'GET':
+            return render(request,'info.html')
+        
+        if request.method == 'POST':
+
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            details  = request.POST['details']
+            profile = request.FILES['profile']
+            rating = request.POST['rating']
+
+            user = User.objects.get(email = request.user.email)
+
+            user.first_name = first_name
+            user.last_name = last_name
+            user.address = details
+            user.profile = profile
+            user.ratting = rating
+            user.save()
+            return redirect('/profile')
+        
+    else:
+
+        return redirect('/auth/login')
+        
