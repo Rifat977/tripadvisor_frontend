@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block link %}
+<link rel="stylesheet" href="{% static "./css/places.css" %}">
+<link rel="stylesheet" href="{% static "./css/select-sub-place.css" %}">
+{% endblock link %}
+
+
+
+{% block content %}
+
+    <section class="place-main">
+
+        <div class="src-chat mb-3">
+
+            <div class="src rounded-pill p-2 w-md-50">
+                <form action="#" class="m-0">
+                    <input type="text" placeholder="where are you going? " class="srcbar m-0">
+                    <input type="submit" value="Search" class="srcbutton">
+
+                </form>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <section class="selected-place">
+
+
+        <div class="content">
+            <h2>Selected Place is, Kuakata</h2>
+            <div class="row">
+
+                <div class="col-sm-12 col-md-9 col-xs-12 ">
+
+                    <div class="place">
+                        <div class="place-img">
+                            <img src="{%static "./photos/kuakata.png"%}" alt="">
+                        </div>
+                        <div class="description">
+                            <div class="header-des">
+                                <p>About Kuakata </p>
+                            </div>
+                            <div class="body-des">
+                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui vero 
+                                    facere cum molestiae excepturi voluptates itaque tempore, nobis, aliquam
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub-place">
+
+
+
+                        <div class="sub-place-img">
+                            <img src="{%static "./photos/fater_chor.png"%}" alt="">
+                        </div>
+                        <div class="sub-description">
+                            <div class="sub-header">
+                                <p>Fatrar Char</p>
+                                <div class="cheak-option">
+                                    <i class="bi bi-check-circle"></i>
+                                    <i class="bi bi-check-circle-fill"></i>
+                                </div>
+
+
+                            </div>
+                            <div class="sub-body-des">
+                                <p>Lorem ipsum dolor sit 
+                                    amet consectetur, adipisicing elit. Aut accusamus 
+                                    excepturi quasi officia nemo accusantium esse 
+                                    repudiandae ipsam amet modi.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="sub-place">
+
+
+
+                        <div class="sub-place-img">
+                            <img src="{%static "./photos/Gangamati.png"%}" alt="">
+                        </div>
+                        <div class="sub-description">
+                            <div class="sub-header">
+                                <p>Gangamati Reserved Forest </p>
+                                <div class="cheak-option">
+                                    <i class="bi bi-check-circle"></i>
+                                    <i class="bi bi-check-circle-fill"></i>
+                                </div>
+
+
+                            </div>
+                            <div class="sub-body-des">
+                                <p>Lorem ipsum dolor sit 
+                                    amet consectetur, adipisicing elit. Aut accusamus 
+                                    excepturi quasi officia nemo accusantium esse 
+                                    repudiandae ipsam amet modi.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+    
+                <div class="col-sm-12 col-md-3 col-xs-12">
+                    <div class="selected-card">
+                        <div class="card-header">
+                            <p>Selected</p>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>Fatrar Char</li>
+                                <li>Gangamati Reserved Forest</li>
+                            </ul>
+                        </div>
+                        <div class="card-foter">
+                            <button>Next</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    
+    
+    {% endblock content %}

@@ -1,0 +1,204 @@
+
+
+
+.selected-place{
+    width: 100%;
+}
+
+.content{
+    width: 85%;
+    margin: auto;
+}
+.content p{
+    font-size: small;
+    text-align: left;
+}
+
+.place{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 270px;
+
+    max-width: 700px;
+}
+
+.place-img img{
+width: 530px;
+
+}
+.place-img{
+    width: 600px;
+}
+
+.description{
+    background-color: #186BCB29;
+    width: 200px;
+    height: 241px;
+    min-width: 200px;
+}
+.header-des{
+    border-bottom: 2px solid black;
+    margin-bottom: 5px;
+}
+.header-des p{
+    font-weight: bold;
+}
+.sub-place{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 700px;
+    padding: 10px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    background-color: #F7F3F3;
+}
+.sub-place-img img{
+    width: 225px;
+}
+.sub-place-img{
+    margin-right: 10px;
+}
+
+.sub-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cheak-option i{
+    font-size: 20px;
+}
+.sub-header p{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+.selected-card{
+    margin-top: 20px;
+    width: 200px;
+    min-height: 250px;
+    background-color: #186BCB29;
+    position: relative;
+    border: 1px solid black;
+}
+
+.card-header{
+    border-bottom: 2px solid black;
+    margin-bottom: 20px;
+}
+.card-header p{
+    font-size: 20px;
+    text-align: center;
+    align-items: center;
+    padding-top: 5px;
+}
+.card-body{
+    width: 80%;
+    margin: auto;
+}
+
+.card-body ul{
+    width: 100%;
+
+}
+.card-foter{
+
+    width: 100%;
+    position: absolute;
+    bottom: 3px;
+    text-align: center;
+}
+
+.card-foter button{
+    width: 70px;
+    background-color: black;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    color: white;
+}
+
+
+@media screen and (min-width: 1250px) {
+
+    .content{
+        width: 90%;
+    }
+    .src-chat{
+        width: 60%;
+    }
+
+    
+    }
+    
+    @media screen and (min-width: 1700px) {
+    
+        .content{
+            width: 60%;
+        }
+        .src-chat{
+            width: 60%;
+        }
+        
+        
+        }
+        
+    
+    @media screen and (min-width: 1800px) {
+    
+        .content{
+            width: 60%;
+        }
+        .src-chat{
+            width: 60%;
+        }
+            
+            }
+
+
+@media screen and (max-width: 1000px) {
+
+    .place{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 770px) {
+    .selected-place{
+        width: 100%;
+    }
+    .content{
+        width: 100%;
+    }
+
+     .place{
+        display: block;
+        max-width: 100%;
+        height: auto;
+        width: 100%;
+     }
+     .place-img img {
+        width: 100%;
+
+     }
+
+    .place-img{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .description{
+        width: 100%;
+    }
+    .sub-place{
+        display: block;
+    }
+
+    .selected-card{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+     
+                        
+}
