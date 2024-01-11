@@ -142,11 +142,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 AUTH_USER_MODEL = 'authentication.User'
 
 
+
 #Email Configuration
 
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587 #465
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'shossain201214@bscse.uiu.ac.bd'
+EMAIL_HOST_PASSWORD = 'lolsjvdpvbnexknv'
 EMAIL_USE_TLS = True

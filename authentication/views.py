@@ -31,8 +31,13 @@ def register(request):
 
         print(email)
         print(password)
-        user = User.objects.create(email=email)
-        user.set_password(password)
+        try:
+            user = User.objects.create(email=email)
+            user.set_password(password)
+            user.save()
+        except:
+            messages.error(request,'Email Already Exist.')
+            return redirect('/auth/register')
         otp = random.randint(1000,9999)
         user.create_account_otp = otp
         if first_name is not None:
@@ -43,13 +48,13 @@ def register(request):
         user.is_active = False
         user.save()
 
-        # send_mail(
-        #     "OTP for Activate Your Account",
-        #     f"{user.create_account_otp}",
-        #     "", # Email
-        #     [user.email],
-        #     fail_silently= False,
-        #     )
+        send_mail(
+            "OTP for Activate Your Account",
+            f"{user.create_account_otp}",
+            "shossain201214@bscse.uiu.ac.bd", # Email
+            [user.email],
+            fail_silently= False,
+            )
             
 
         return redirect(f'/auth/cheak_otp/{user.id}')

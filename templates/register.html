@@ -52,6 +52,10 @@
           >
             NEXT
           </button>
+          {% for msg in messages %}
+
+          <p class="mt-2 text-danger">{{msg}}</p>
+          {% endfor %}
         </form>
       </div>
     </div>
