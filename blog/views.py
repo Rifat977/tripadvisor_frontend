@@ -1,7 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from .models import Blog, BlogProfile
-from django.shortcuts import redirect
 
 
 def blog(request):
@@ -13,3 +12,25 @@ def blog(request):
 
     else:
         return redirect('/')
+
+
+
+def create_blog(request):
+
+    if request.user.is_authenticated:
+
+        if request.method == 'GET':
+
+            return render(request,'create-blog.html')
+        
+        else:
+            title = request.POST['title']
+            description = request.POST['description']
+
+            objj = Blog.objects.create(user=request.user,title = title,description=description)
+            objj.save()
+
+            return redirect('/blog/all_blog')
+        
+    else:
+        return redirect('/auth/login')

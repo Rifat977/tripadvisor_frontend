@@ -1,5 +1,4 @@
 # Ignore Django static files
-/static/
 
 # Ignore compiled Python files
 __pycache__/
