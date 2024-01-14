@@ -4,11 +4,24 @@
 
 
 {% block link %}
-<link rel="stylesheet" href="{% static "./css/places.css" %}">
-<link rel="stylesheet" href="{% static "./css/select-sub-place.css" %}">
-<link rel="stylesheet" href="{% static "./css/place_chat.css" %}">
+<style>
+    .message {
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 8px;
+    }
 
-<link rel="stylesheet" href="{% static "./css/select_sub_place_chat.css" %}">
+    .message.sent {
+        background-color: #007bff;
+        color: #fff;
+        text-align: right;
+    }
+
+    .message.received {
+        background-color: #FEFEFE;
+        color: #000;
+    }
+</style>
 
 {% endblock link %}
 
@@ -17,199 +30,129 @@
 
 {% block content %}
 
-    <section class="place-main">
+<div class="container mt-4">
 
-        <div class="src-chat mb-3">
-
-            <div class="src rounded-pill p-2  ">
-                <form action="#" class="mb-0">
-                    <input type="text" placeholder="where are you going? " class="srcbar">
-                    <input type="submit" value="Search" class="srcbutton">
-
-                </form>
-
-            </div>
-
-
+    <!-- Search Bar -->
+    <div class="input-group mb-3" style="width: 50%;">
+        <input type="text" class="form-control rouneded-pill-left" placeholder="where are you going?" aria-label="Search"
+            aria-describedby="basic-addon2" style="width: 70%;">
+        <div class="input-group-append">
+            <button class="btn text-dark" style="background-color: #3D8ED9;" type="button">Search</button>
         </div>
+    </div>    
 
-    </section>
-
-
-    <section class="selected-place">
-
-
-        <div class="content">
-
-            <div class="row">
-
-                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-8">
-
-                    <div class="place">
-                        <div class="place-img">
-                            <img src="{%static "./photos/kuakata.png"%}" alt="">
-                        </div>
-                        <div class="selected-card">
-                            <div class="card-header">
-                                <p>Selected</p>
-                            </div>
-                            <div class="card-body">
-                                <ul>
-                                    <li>Fatrar Char</li>
-                                    <li>Gangamati Reserved Forest</li>
-                                </ul>
-                            </div>
-                            <div class="card-foter">
-                                <button>Next</button>
-                            </div>
-                        </div>
+    <div class="row">
+        <div class="col-md-8 col-12">
+            <!-- Blog Card -->
+            <div class="row no-gutters" style="background-color: #0DAB832E;">
+                <div class="col-8 position-relative">
+                    <img src="{% static "./photos/kuakata.png" %}" class="w-100 h-100" alt="Blog Image">
+                    <div class="position-absolute top-0 start-0 text-white">
+                        <h5 class="m-3 texti-light">Kuakata Beach</h5>
                     </div>
-
-                    <div class="sub-place">
-
-
-
-                        <div class="sub-place-img">
-                            <img src="{%static "./photos/fater_chor.png"%}" alt="">
+                </div>
+                
+                <div class="col-4 p-3 text-dark rouneded" style="background-color: #186BCB29;">
+                    <h5 class="card-title border-bottom border-dark">Selected</h5>
+                    <ul>
+                        <li>Fatrar Char</li>
+                        <li>Gangamati Reserved Forest</li>
+                    </ul>
+                    <button class="rounded-pill btn btn-dark btn-sm">Next</button>
+                </div>
+            </div>
+            <!-- Blog Entry 2 -->
+                    <div class="row no-gutters bg-light mt-3">
+                        <div class="col-md-4 p-2">
+                            <img src="{%static "./photos/fater_chor.png"%}" class="card-img" alt="Blog Image 2">
                         </div>
-                        <div class="sub-description">
-                            <div class="sub-header">
-                                <p>Fatrar Char</p>
-                                <div class="cheak-option">
-                                    <i class="bi bi-check-circle"></i>
-                                    <i class="bi bi-check-circle-fill"></i>
-                                </div>
-
-
-                            </div>
-                            <div class="sub-body-des">
-                                <p>Lorem ipsum dolor sit 
-                                    amet consectetur, adipisicing elit. Aut accusamus 
-                                    excepturi quasi officia nemo accusantium esse 
-                                    repudiandae ipsam amet modi.
+                        <div class="col-md-8">
+                            <div class="p-2">
+                                <h5 class="card-title">Fatrar Char</h5>
+                                <p class="card-text small">
+                                    Fatrar char is the nice tourist place near Kuakata beach. From Kuakata traveler may visit the Fatrar Chor. Fatrar Chor is the part of the Sundarban forest. Fatrar Char is also known as Fatrar Bon. As the Fatrar Char is the part of Sundarban so it is mangrove forest. Fatrar Bon is fairly big forest in Kuakata                    
                                 </p>
                             </div>
                         </div>
                     </div>
-
-
-
-
-                    <div class="sub-place">
-
-
-
-                        <div class="sub-place-img">
-                            <img src="{%static "./photos/Gangamati.png"%}" alt="">
+                    <div class="row no-gutters bg-light mt-3">
+                        <div class="col-md-4 p-2">
+                            <img src="{%static "./photos/Gangamati.png"%}" class="card-img" alt="Blog Image 2">
                         </div>
-                        <div class="sub-description">
-                            <div class="sub-header">
-                                <p>Gangamati Reserved Forest </p>
-                                <div class="cheak-option">
-                                    <i class="bi bi-check-circle"></i>
-                                    <i class="bi bi-check-circle-fill"></i>
-                                </div>
-
-
-                            </div>
-                            <div class="sub-body-des">
-                                <p>Lorem ipsum dolor sit 
-                                    amet consectetur, adipisicing elit. Aut accusamus 
-                                    excepturi quasi officia nemo accusantium esse 
-                                    repudiandae ipsam amet modi.
-                                </p>
+                        <div class="col-md-8">
+                            <div class="p-2">
+                                <h5 class="card-title">Gangamati Reserved Forest </h5>
+                                <p class="card-text small">
+                                    Gangamati Reserved Forest is an evergreen mangrove forest in the Kuakata Patuakhali Bangladesh. It is located on the eastern end of the beach of Kuakata. Distance from Gangamati Reserved Forest to Sundarban is one hour by speedboat. The best way to reach the Gangamati Reserved Forest is by foot or bike along the beach.                                </p>
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
-                </div>
-    
-                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-4">
-
-
-                    <div class="chatbox">
-                        <div class="chat-header">
-                            <div class="logo">
-                                <img src="{%static "./photos/logo.png"%}" alt="">
-                                
-                            </div>
-                            <p>Plan Support</p>
-                            
-                            <div class="control">
-                                <i class="bi bi-dash-lg"></i>
-                                <i class="bi bi-x-lg"></i>
-                            </div>
-                        </div>
-
-                        <div class="chat-body">
-                            <div class="received-msg">
-                                <i class="bi bi-person-circle"></i>
-                                <div class="msg">
-                                    <p>Hello There ! i am sourav kuma sky sadfhasdhf lhfd alsdhf hflksdah fr Roy and ihave</p>
-                                </div>
-                            </div>
-
-
-                            <div class="send-msg">
-                                <div class="msg">
-                                    <p>I am User</p>
-                                </div>
-                            </div>
-
-
-
-                            <div class="suggeation-msg">
-                                <div class="send-msg">
-                                    <div class="msg">
-                                        <p>Plan a trip</p>
-                                    </div>
-                                </div>
-                                <div class="send-msg">
-                                    <div class="msg">
-                                        <p>Modify Booking</p>
-                                    </div>
-                                </div>
-  
-                            </div>
-
-                            <div class="suggeation-msg">
-                                <div class="send-msg">
-                                    <div class="msg">
-                                        <p>Airport Transfar</p>
-                                    </div>
-                                </div>
-                                <div class="send-msg">
-                                    <div class="msg">
-                                        <p>Reqards Programs</p>
-                                    </div>
-                                </div>
-  
-                            </div>
-
-
-                        </div>
-
-                        <div class="send-msg-bar">
-                            <div class="type-msg">
-
-                                <input type="text" placeholder="Type Your Msg Here..">
-                                <i class="bi bi-send"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
         </div>
-    </section>
+        <div class="col-md-4 col-12">
+            <!-- Chat Box -->
+            <div class="card">
+                <div class="card-header text-white" style="background-color: #0DAB83;">
+                    Chat Box
+                </div>
+                <div class="card-body" style="height: 450px; overflow-y: auto; background-color: #D9D9D9;" id="chat-messages">
+                    <!-- <div class="message received mr-5 mb-2">Welcome to the chat!</div>
+                    <div class="message sent ml-5 mb-2">Welcome to the chat!</div> -->
+                </div>
+                <div class="input-group rounded-lg">
 
-    
-    
-    {% endblock content %}
+                    <input type="text" class="form-control" placeholder="Type your message..." id="user-input" style="padding: 25px;" onkeydown="if (event.keyCode === 13) sendMessage()">
+                  
+                    <div class="input-group-append p-3">
+                  
+                      <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89.471-1.178-1.178.471L5.93 9.363l.338.215a.5.5 0 0 1 .154.154l.215.338 7.494-7.494Z"/>
+                        </svg>
+                      </span>
+                  
+                    </div>
+                  
+                  </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function sendMessage() {
+        var userInput = document.getElementById("user-input").value;
+        if (userInput.trim() !== "") {
+            $.ajax({
+                url: "/sub_place_chatbox",
+                method: "POST",
+                data: {userInput: userInput},
+                success: function (response) {
+                    var chatMessages = document.getElementById("chat-messages");
+
+                    var userMessage = document.createElement("div");
+                    userMessage.className = "message sent ml-5";
+                    userMessage.innerHTML = "<strong></strong> " + userInput;
+                    chatMessages.appendChild(userMessage);
+
+                    setTimeout(function () {
+                        var botMessage = document.createElement("div");
+                        botMessage.className = "message received mr-5";
+                        botMessage.innerHTML = "<strong></strong> " + response.message;
+                        chatMessages.appendChild(botMessage);
+                    }, 500);
+
+                    document.getElementById("user-input").value = "";
+                }
+            });
+        }
+    }
+</script>
+
+{% endblock script %}
