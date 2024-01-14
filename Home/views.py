@@ -1,14 +1,18 @@
 from datetime import datetime
-
 import requests
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-
+from django.views.decorators.csrf import csrf_exempt
 from authentication.models import User
 from blog.models import *
-
 from .models import *
+
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+import os
 
 
 def home(request):
@@ -37,8 +41,37 @@ def sub_place(request):
 def sub_sub_place(request):
     return render(request,'select-sub-place.html')
 
-
+@csrf_exempt
 def sub_place_chatbox(request):
+    file_path = 'main.csv'  
+    df = pd.read_csv(file_path)
+    
+    if request.method == 'POST':
+        user_message = request.POST.get('userInput', '')
+
+        df['Combined Features'] = df['Category'] + ' ' + df['Description']
+
+        vectorizer = TfidfVectorizer(stop_words='english')
+        user_message_vector = vectorizer.fit_transform([user_message])
+
+        places_vectors = vectorizer.transform(df['Combined Features'].fillna(''))
+
+        cosine_similarities = cosine_similarity(user_message_vector, places_vectors).flatten()
+
+        best_match_index = cosine_similarities.argmax()
+
+        best_match_details = df.iloc[best_match_index]
+
+        bot_response = "Place Name: {},\nCategory: {},\nDescription: {},\nLocation: {},\nEntry Fee (BDT): {},\nOpening Hours: {}".format(
+            best_match_details['Place Name'],
+            best_match_details['Category'],
+            best_match_details['Description'],
+            best_match_details['Location'],
+            best_match_details['Entry Fee (BDT)'],
+            best_match_details['Opening Hours']
+        )
+
+        return JsonResponse({'message': bot_response})
     return render(request,'select_sub_place_chat.html')
 
 

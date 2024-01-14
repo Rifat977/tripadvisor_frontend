@@ -1,0 +1,12 @@
+# Ignore Django static files
+/static/
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+
+# Ignore logs
+*.log
+
+# Ignore environment files
+.env
