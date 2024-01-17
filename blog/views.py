@@ -11,7 +11,7 @@ def blog(request):
         return render(request,'blog.html',context={'blogs':blogs})
 
     else:
-        return redirect('/')
+        return redirect('/auth/login')
 
 
 
@@ -26,8 +26,11 @@ def create_blog(request):
         else:
             title = request.POST['title']
             description = request.POST['description']
-
+            imeage = request.FILES['imeage']
             objj = Blog.objects.create(user=request.user,title = title,description=description)
+
+
+            objj.imeage = imeage
             objj.save()
 
             return redirect('/blog/all_blog')
