@@ -58,21 +58,25 @@ def sub_place_chatbox(request):
 
         cosine_similarities = cosine_similarity(user_message_vector, places_vectors).flatten()
 
-        best_match_index = cosine_similarities.argmax()
+        top_n_matches_indices = cosine_similarities.argsort()[-2:][::-1]
 
-        best_match_details = df.iloc[best_match_index]
+        suggestions = []
+        for index in top_n_matches_indices:
+            match_details = df.iloc[index]
+            suggestion = {
+                'Place Name': match_details['Place Name'],
+                'Category': match_details['Category'],
+                'Description': match_details['Description'],
+                'Location': match_details['Location'],
+                'Entry Fee (BDT)': match_details['Entry Fee (BDT)'],
+                'Opening Hours': match_details['Opening Hours']
+            }
+            suggestions.append(suggestion)
 
-        bot_response = "Place Name: {},\nCategory: {},\nDescription: {},\nLocation: {},\nEntry Fee (BDT): {},\nOpening Hours: {}".format(
-            best_match_details['Place Name'],
-            best_match_details['Category'],
-            best_match_details['Description'],
-            best_match_details['Location'],
-            best_match_details['Entry Fee (BDT)'],
-            best_match_details['Opening Hours']
-        )
+        print(suggestions)
 
-        return JsonResponse({'message': bot_response})
-    return render(request,'select_sub_place_chat.html')
+        return JsonResponse({'suggestions': suggestions})
+    return render(request, 'select_sub_place_chat.html')
 
 
 def event(request):

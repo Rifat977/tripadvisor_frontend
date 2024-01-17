@@ -41,7 +41,7 @@
         </div>
     </div>    
 
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-md-8 col-12">
             <!-- Blog Card -->
             <div class="row no-gutters" style="background-color: #0DAB832E;">
@@ -61,32 +61,21 @@
                     <button class="rounded-pill btn btn-dark btn-sm">Next</button>
                 </div>
             </div>
-            <!-- Blog Entry 2 -->
-                    <div class="row no-gutters bg-light mt-3">
+            <!-- Suggestions -->
+                    <!-- <div class="row no-gutters bg-light mt-3">
                         <div class="col-md-4 p-2">
                             <img src="{%static "./photos/fater_chor.png"%}" class="card-img" alt="Blog Image 2">
                         </div>
                         <div class="col-md-8">
                             <div class="p-2">
-                                <h5 class="card-title">Fatrar Char</h5>
-                                <p class="card-text small">
-                                    Fatrar char is the nice tourist place near Kuakata beach. From Kuakata traveler may visit the Fatrar Chor. Fatrar Chor is the part of the Sundarban forest. Fatrar Char is also known as Fatrar Bon. As the Fatrar Char is the part of Sundarban so it is mangrove forest. Fatrar Bon is fairly big forest in Kuakata                    
+                                <h5 class="card-title" id="place-title">Place Title </h5>
+                                <p class="card-text small" id="place-description">
+                                    Place details
                                 </p>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row no-gutters bg-light mt-3">
-                        <div class="col-md-4 p-2">
-                            <img src="{%static "./photos/Gangamati.png"%}" class="card-img" alt="Blog Image 2">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="p-2">
-                                <h5 class="card-title">Gangamati Reserved Forest </h5>
-                                <p class="card-text small">
-                                    Gangamati Reserved Forest is an evergreen mangrove forest in the Kuakata Patuakhali Bangladesh. It is located on the eastern end of the beach of Kuakata. Distance from Gangamati Reserved Forest to Sundarban is one hour by speedboat. The best way to reach the Gangamati Reserved Forest is by foot or bike along the beach.                                </p>
-                            </div>
-                        </div>
-                    </div>
+                        </div>                        
+                    </div> -->
+                    <div id="chat-suggestions"></div>
         </div>
         <div class="col-md-4 col-12">
             <!-- Chat Box -->
@@ -135,18 +124,41 @@
                 data: {userInput: userInput},
                 success: function (response) {
                     var chatMessages = document.getElementById("chat-messages");
+                    chatMessages.innerHTML = ""; 
 
                     var userMessage = document.createElement("div");
                     userMessage.className = "message sent ml-5";
                     userMessage.innerHTML = "<strong></strong> " + userInput;
                     chatMessages.appendChild(userMessage);
 
-                    setTimeout(function () {
-                        var botMessage = document.createElement("div");
-                        botMessage.className = "message received mr-5";
-                        botMessage.innerHTML = "<strong></strong> " + response.message;
-                        chatMessages.appendChild(botMessage);
-                    }, 500);
+                    var chatSuggestions = document.getElementById("chat-suggestions");
+
+                    if (response.suggestions && response.suggestions.length > 0) {
+                        response.suggestions.forEach(function (suggestion) {
+                            var card = document.createElement("div");
+                            card.className = "card mt-2";
+
+                            var cardImage = document.createElement("img");
+                            cardImage.className = "card-img-left img-fluid h-25";
+                            cardImage.src = "{% static './photos/fater_chor.png' %}"; 
+                            card.appendChild(cardImage);
+
+                            var cardBody = document.createElement("div");
+                            cardBody.className = "card-body";
+
+                            cardBody.innerHTML = "<h5 class='card-title'>" + suggestion['Place Name'] + "</h5>" +
+                                "<p class='card-text'>" +
+                                "Category: " + suggestion['Category'] + "<br>" +
+                                "Description: " + suggestion['Description'] + "<br>" +
+                                "Location: " + suggestion['Location'] + "<br>" +
+                                "Entry Fee (BDT): " + suggestion['Entry Fee (BDT)'] + "<br>" +
+                                "Opening Hours: " + suggestion['Opening Hours'] +
+                                "</p>";
+
+                            card.appendChild(cardBody);
+                            chatSuggestions.appendChild(card);
+                        });
+                    }
 
                     document.getElementById("user-input").value = "";
                 }
@@ -154,5 +166,4 @@
         }
     }
 </script>
-
 {% endblock script %}
