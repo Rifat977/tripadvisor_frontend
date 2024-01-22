@@ -55,8 +55,6 @@
                 <div class="col-4 p-3 text-dark rouneded" style="background-color: #186BCB29;">
                     <h5 class="card-title border-bottom border-dark">Selected</h5>
                     <ul>
-                        <li>Fatrar Char</li>
-                        <li>Gangamati Reserved Forest</li>
                     </ul>
                     <button class="rounded-pill btn btn-dark btn-sm">Next</button>
                 </div>
@@ -115,16 +113,18 @@
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+    var selectedPlaces = new Set();
+
     function sendMessage() {
         var userInput = document.getElementById("user-input").value;
         if (userInput.trim() !== "") {
             $.ajax({
                 url: "/sub_place_chatbox",
                 method: "POST",
-                data: {userInput: userInput},
+                data: { userInput: userInput },
                 success: function (response) {
                     var chatMessages = document.getElementById("chat-messages");
-                    chatMessages.innerHTML = ""; 
+                    chatMessages.innerHTML = "";
 
                     var userMessage = document.createElement("div");
                     userMessage.className = "message sent ml-5";
@@ -135,35 +135,64 @@
 
                     if (response.suggestions && response.suggestions.length > 0) {
                         response.suggestions.forEach(function (suggestion) {
-                            var card = document.createElement("div");
-                            card.className = "card mt-2";
+                            var placeName = suggestion['Place Name'];
 
-                            var cardImage = document.createElement("img");
-                            cardImage.className = "card-img-left img-fluid h-25";
-                            cardImage.src = "{% static './photos/fater_chor.png' %}"; 
-                            card.appendChild(cardImage);
+                            if (!selectedPlaces.has(placeName)) {
+                                var card = document.createElement("div");
+                                card.className = "card mt-2";
+                                card.setAttribute("onclick", "addSelectedPlace('" + placeName + "')");
 
-                            var cardBody = document.createElement("div");
-                            cardBody.className = "card-body";
+                                var cardImage = document.createElement("img");
+                                cardImage.className = "card-img-left img-fluid h-25";
+                                cardImage.src = "{% static './photos/fater_chor.png' %}";
+                                card.appendChild(cardImage);
 
-                            cardBody.innerHTML = "<h5 class='card-title'>" + suggestion['Place Name'] + "</h5>" +
-                                "<p class='card-text'>" +
-                                "Category: " + suggestion['Category'] + "<br>" +
-                                "Description: " + suggestion['Description'] + "<br>" +
-                                "Location: " + suggestion['Location'] + "<br>" +
-                                "Entry Fee (BDT): " + suggestion['Entry Fee (BDT)'] + "<br>" +
-                                "Opening Hours: " + suggestion['Opening Hours'] +
-                                "</p>";
+                                var cardBody = document.createElement("div");
+                                cardBody.className = "card-body";
 
-                            card.appendChild(cardBody);
-                            chatSuggestions.appendChild(card);
+                                cardBody.innerHTML = "<h5 class='card-title'>" + placeName + "</h5>" +
+                                    "<p class='card-text'>" +
+                                    "Category: " + suggestion['Category'] + "<br>" +
+                                    "Description: " + suggestion['Description'] + "<br>" +
+                                    "Location: " + suggestion['Location'] + "<br>" +
+                                    "Entry Fee (BDT): " + suggestion['Entry Fee (BDT)'] + "<br>" +
+                                    "Opening Hours: " + suggestion['Opening Hours'] +
+                                    "</p>";
+
+                                card.appendChild(cardBody);
+                                chatSuggestions.appendChild(card);
+                            }
                         });
                     }
 
                     document.getElementById("user-input").value = "";
+
+                    toggleNextButtonVisibility();
                 }
             });
         }
     }
+
+    function addSelectedPlace(placeName) {
+        var selectedCard = document.querySelector(".col-4.p-3.text-dark.rouneded");
+        var selectedList = selectedCard.querySelector("ul");
+
+        if (!selectedPlaces.has(placeName)) {
+            var listItem = document.createElement("li");
+            listItem.textContent = placeName;
+            selectedList.appendChild(listItem);
+
+            selectedPlaces.add(placeName);
+
+            toggleNextButtonVisibility();
+        }
+    }
+
+    function toggleNextButtonVisibility() {
+        var nextButton = document.querySelector(".col-4.p-3.text-dark.rouneded button");
+        nextButton.style.display = selectedPlaces.size > 0 ? "block" : "none";
+    }
 </script>
 {% endblock script %}
+
+
