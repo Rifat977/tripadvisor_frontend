@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block link %}
+<link rel="stylesheet" href="{% static "./css/places.css" %}">
+<link rel="stylesheet" href="{% static "./css/place_chat.css" %}">
+
+{% endblock link %}
+
+
+{% block content %}
+
+    <section class="place-main">
+
+        <div class="src-chat mb-3">
+
+            <div class="src rounded-pill p-2 m-auto">
+                <form action="#" class="m-0">
+                    <input type="text" placeholder="where are you going? " class="srcbar">
+                    <input type="submit" value="Search" class="srcbutton">
+
+                </form>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <section class="all-places mb-4">
+
+        <div class="all-places-content m-auto">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="larger-view-place">
+                        <img src="{% static "./photos/place1.png" %}" alt="">
+                        <div class="place-info">
+                            <h3>Sonargau Musium</h3>
+                            <button>view</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="chatbox">
+                        <div class="chat-header">
+                            <div class="logo">
+                                <img src="{% static "./photos/logo.png" %}" alt="">
+                                
+                            </div>
+                            <p>Plan Support</p>
+                            
+                            <div class="control">
+                                <i class="bi bi-dash-lg"></i>
+                                <i class="bi bi-x-lg"></i>
+                            </div>
+                        </div>
+
+                        <div class="chat-body">
+                            <div class="received-msg">
+                                <i class="bi bi-person-circle"></i>
+                                <div class="msg">
+                                    <p>Hello There ! i am sourav kuma sky sadfhasdhf lhfd alsdhf hflksdah fr Roy and ihave</p>
+                                </div>
+                            </div>
+
+
+                            <div class="send-msg">
+                                <div class="msg">
+                                    <p>I am User</p>
+                                </div>
+                            </div>
+
+
+
+                            <div class="suggeation-msg">
+                                <div class="send-msg">
+                                    <div class="msg">
+                                        <p>Plan a trip</p>
+                                    </div>
+                                </div>
+                                <div class="send-msg">
+                                    <div class="msg">
+                                        <p>Modify Booking</p>
+                                    </div>
+                                </div>
+  
+                            </div>
+
+                            <div class="suggeation-msg">
+                                <div class="send-msg">
+                                    <div class="msg">
+                                        <p>Airport Transfar</p>
+                                    </div>
+                                </div>
+                                <div class="send-msg">
+                                    <div class="msg">
+                                        <p>Reqards Programs</p>
+                                    </div>
+                                </div>
+  
+                            </div>
+
+
+                        </div>
+
+                        <div class="send-msg-bar">
+                            <div class="type-msg">
+
+                                <input type="text" placeholder="Type Your Msg Here..">
+                                <i class="bi bi-send"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    {% endblock content %}

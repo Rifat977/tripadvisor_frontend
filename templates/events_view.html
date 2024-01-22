@@ -1,0 +1,66 @@
+{% extends "base.html" %} {% load static %} {% block link %}
+<style>
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+
+  .event-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .event-card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .event-card .card-body {
+    padding: 20px;
+  }
+
+  .event-card h5 {
+    margin-top: 0;
+    color: #333;
+  }
+
+  .event-card p {
+    color: #666;
+  }
+
+  @media (min-width: 768px) {
+    .event-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .event-card img {
+      flex: 1;
+    }
+
+    .event-card .card-body {
+      flex: 1;
+    }
+  }
+</style>
+{% endblock link %} {% block content %}
+<div class="container">
+  <div class="event-card">
+    <img src="{{event.cover.url}}" alt="Event 1" />
+    <div class="card-body">
+      <h5>{{event.title}}</h5>
+      <p>{{event.description}}</p>
+    </div>
+  </div>
+</div>
+{% endblock content %}

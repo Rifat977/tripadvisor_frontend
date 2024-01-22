@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% load static %} {% block link %}
+<link rel="stylesheet" href="{%static './css/register.css'%}" />
+{% endblock link %} {% block content %}
+
+<div class="container login-section mt-4">
+  <div class="row">
+    <div class="col-md-7 col-12">
+      <div class="shadow p-4 text-center">
+        <h3 class="font-weight-bold">Create Account</h3>
+        <form method="POST" action="/auth/register">
+          {% csrf_token %}
+          <div class="form-group mt-5">
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              name="email"
+              placeholder="Enter Your Email"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="Enter Your Password"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="first_name"
+              name="first_name"
+              placeholder="Enter Your First Name"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="last_name"
+              name="last_name"
+              placeholder="Enter Your Last Name"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn px-4 mt-2 font-weight-bold text-white rounded"
+            style="background-color: #0d2838"
+          >
+            NEXT
+          </button>
+          {% for msg in messages %}
+
+          <p class="mt-2 text-danger">{{msg}}</p>
+          {% endfor %}
+        </form>
+      </div>
+    </div>
+    <div class="col-5">
+      <img src="{% static './photos/login.png' %}" class="h-75" alt="">
+    </div>
+  </div>
+</div>
+{% endblock content %}
