@@ -268,12 +268,7 @@
             <div class="container">
                 <div class="col-lg-12 p-3 col-md-12 rounded border" style="background-color: #186BCB29; display: flex; flex-direction: column; align-items: center;">
                     <h3 class="border-bottom border-dark">Selected</h3>
-                    <ul>
-                        <li>Fatrar Char.</li>
-                        <li>Gangamati Reserved Forest.</li>
-                        <li>Foods.</li>
-                        <li>Buffet.</li>
-                        <li>Budget = 5000 tk.</li>
+                    <ul id="selectedItemsList">
                     </ul>
                     <button class="btn btn-success rounded-pill">Submit</button>
                 </div>
@@ -331,5 +326,61 @@
         </div>
     </div>
 </div>
+
+{% block script %}
+<script>
+
+    function getSelectedItems() {
+        var selectedItems = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+
+        // Get the list element
+        var listElement = document.getElementById('selectedItemsList');
+
+        // Clear existing items in the list
+        listElement.innerHTML = '';
+
+        // Display selected items in the list
+        selectedItems.forEach(function(item) {
+            var listItem = document.createElement('li');
+            listItem.textContent = item;
+            listElement.appendChild(listItem);
+        });
+    }
+
+    getSelectedItems()
+
+
+    // var selectedPlaces = new Set();
+
+    // getSelectedPlacesFromLocalStorage();
+
+
+    // function getSelectedPlacesFromLocalStorage() {
+    //     var storedData = localStorage.getItem('selectedPlaces');
+    //     if (storedData) {
+    //         selectedPlaces = new Set(JSON.parse(storedData));
+    //     }
+    // }
+    
+    // selectedPlaces.forEach(function (value){
+    //     addSelectedPlace(value)
+    // })
+
+
+    // function addSelectedPlace(placeName) {
+    //     var selectedCard = document.querySelector(".selected_div");
+    //     var selectedList = selectedCard.querySelector("ul");
+
+    //     if (!selectedPlaces.has(placeName)) {
+    //         var listItem = document.createElement("li");
+    //         listItem.textContent = placeName;
+    //         selectedList.appendChild(listItem);
+
+    //         selectedPlaces.add(placeName);
+
+    //     }
+    // }
+</script>
+{% endblock script %}
 
 {% endblock content %}

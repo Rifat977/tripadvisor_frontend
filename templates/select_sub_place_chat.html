@@ -56,23 +56,11 @@
                     <h5 class="card-title border-bottom border-dark">Selected</h5>
                     <ul>
                     </ul>
-                    <button class="rounded-pill btn btn-dark btn-sm">Next</button>
+                    <a href="{% url 'hotels' %}">
+                        <button class="rounded-pill btn btn-dark btn-sm">Next</button>
+                    </a>
                 </div>
             </div>
-            <!-- Suggestions -->
-                    <!-- <div class="row no-gutters bg-light mt-3">
-                        <div class="col-md-4 p-2">
-                            <img src="{%static "./photos/fater_chor.png"%}" class="card-img" alt="Blog Image 2">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="p-2">
-                                <h5 class="card-title" id="place-title">Place Title </h5>
-                                <p class="card-text small" id="place-description">
-                                    Place details
-                                </p>
-                            </div>
-                        </div>                        
-                    </div> -->
                     <div id="chat-suggestions"></div>
         </div>
         <div class="col-md-4 col-12">
@@ -113,7 +101,21 @@
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+    localStorage.clear()
     var selectedPlaces = new Set();
+
+    function getSelectedPlacesFromLocalStorage() {
+        var storedData = localStorage.getItem('selectedPlaces');
+        if (storedData) {
+            selectedPlaces = new Set(JSON.parse(storedData));
+        }
+    }
+
+    function saveSelectedPlacesToLocalStorage() {
+        localStorage.setItem('selectedPlaces', JSON.stringify(Array.from(selectedPlaces)));
+    }
+
+    getSelectedPlacesFromLocalStorage();
 
     function sendMessage() {
         var userInput = document.getElementById("user-input").value;
@@ -123,8 +125,12 @@
                 method: "POST",
                 data: { userInput: userInput },
                 success: function (response) {
+
+                    var chatSuggestions = document.getElementById("chat-suggestions");
+                    chatSuggestions.innerHTML = "";
+
                     var chatMessages = document.getElementById("chat-messages");
-                    chatMessages.innerHTML = "";
+                    // chatMessages.innerHTML = "";
 
                     var userMessage = document.createElement("div");
                     userMessage.className = "message sent ml-5";
@@ -167,6 +173,8 @@
 
                     document.getElementById("user-input").value = "";
 
+                    saveSelectedPlacesToLocalStorage();
+
                     toggleNextButtonVisibility();
                 }
             });
@@ -183,6 +191,8 @@
             selectedList.appendChild(listItem);
 
             selectedPlaces.add(placeName);
+
+            saveSelectedPlacesToLocalStorage();
 
             toggleNextButtonVisibility();
         }

@@ -8,9 +8,22 @@ from authentication.models import User
 from blog.models import *
 from .models import *
 
+# import pandas as pd
+# from sklearn.feature_extraction.text import TfidfVectorizer
+# from sklearn.metrics.pairwise import cosine_similarity
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('wordnet')
 
 import os
 
@@ -49,33 +62,53 @@ def sub_place_chatbox(request):
     if request.method == 'POST':
         user_message = request.POST.get('userInput', '')
 
+        print(user_message)
+
+        # Combine 'Category' and 'Description'
         df['Combined Features'] = df['Category'] + ' ' + df['Description']
 
-        vectorizer = TfidfVectorizer(stop_words='english')
+        # Tokenization and Lemmatization
+        stop_words = set(stopwords.words('english'))
+        lemmatizer = WordNetLemmatizer()
+
+        def preprocess(text):
+            tokens = word_tokenize(text)
+            tokens = [lemmatizer.lemmatize(token.lower()) for token in tokens if token.isalpha() and token.lower() not in stop_words]
+            return ' '.join(tokens)
+
+        df['Combined Features'] = df['Combined Features'].fillna('').apply(preprocess)
+        user_message = preprocess(user_message)
+
+        # TF-IDF Vectorization
+        vectorizer = TfidfVectorizer()
         user_message_vector = vectorizer.fit_transform([user_message])
+        places_vectors = vectorizer.transform(df['Combined Features'])
 
-        places_vectors = vectorizer.transform(df['Combined Features'].fillna(''))
-
+        # Cosine Similarity
         cosine_similarities = cosine_similarity(user_message_vector, places_vectors).flatten()
 
-        top_n_matches_indices = cosine_similarities.argsort()[-2:][::-1]
-
+        # Get the index of the top match
+        top_match_indices = cosine_similarities.argsort()[::-1][:2]
+    
         suggestions = []
-        for index in top_n_matches_indices:
+        for index in top_match_indices:
             match_details = df.iloc[index]
+            
             suggestion = {
                 'Place Name': match_details['Place Name'],
-                'Category': match_details['Category'],
+                'Category': match_details['Category'], 
                 'Description': match_details['Description'],
                 'Location': match_details['Location'],
                 'Entry Fee (BDT)': match_details['Entry Fee (BDT)'],
                 'Opening Hours': match_details['Opening Hours']
             }
+            
             suggestions.append(suggestion)
 
         print(suggestions)
 
         return JsonResponse({'suggestions': suggestions})
+    
     return render(request, 'select_sub_place_chat.html')
 
 
