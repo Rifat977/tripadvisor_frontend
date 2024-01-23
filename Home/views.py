@@ -8,6 +8,10 @@ from authentication.models import User
 from blog.models import *
 from .models import *
 
+from django.shortcuts import render, get_object_or_404
+
+from django.apps import apps
+
 # import pandas as pd
 # from sklearn.feature_extraction.text import TfidfVectorizer
 # from sklearn.metrics.pairwise import cosine_similarity
@@ -20,10 +24,11 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from scipy.sparse import vstack
 
-nltk.download('stopwords')
-nltk.download('punkt')
-nltk.download('wordnet')
+# nltk.download('stopwords')
+# nltk.download('punkt')
+# nltk.download('wordnet')
 
 import os
 
@@ -54,8 +59,63 @@ def sub_place(request):
 def sub_sub_place(request):
     return render(request,'select-sub-place.html')
 
+
 @csrf_exempt
 def sub_place_chatbox(request):
+    file_path = 'main.csv'  
+    df = pd.read_csv(file_path)
+
+    # Assuming 'Places' is the model representing your places
+    Places = apps.get_model('Home', 'Places')
+
+    if request.method == 'POST':
+        user_message = request.POST.get('userInput', '')
+        place_name = request.POST.get('selectedItem', '')
+
+        # Get the selected place location
+        place = get_object_or_404(Places, place_name=place_name)
+        place_location = place.location
+        if "," in place_location:
+            place_location = place_location.split(",")[1]
+
+        # Filter places where Location contains place_location from CSV
+        filtered_places = Places.objects.filter(location__icontains=place_location)
+
+        # Calculate cosine similarity based on user message
+        vectorizer = TfidfVectorizer()
+        documents = df[['Place Name', 'Description', 'Category']].fillna('').values.tolist()
+        user_vector = vectorizer.fit_transform([user_message])
+        document_vectors = vectorizer.transform([' '.join(doc) for doc in documents])
+        similarities = cosine_similarity(user_vector, document_vectors).flatten()
+
+        # Combine similarity scores with the filtered places
+        place_similarity_mapping = dict(zip(filtered_places, similarities))
+
+        # Filter places with similarity greater than 0
+        sorted_places = [(place, similarity) for place, similarity in place_similarity_mapping.items() if similarity > 0]
+
+        # Sort places by similarity score
+        sorted_places = sorted(sorted_places, key=lambda x: x[1], reverse=True)
+        
+        # Prepare a list of dictionaries containing all fields for each place
+        suggestions = [{'place_name': place.place_name,
+                        'location': place.location,
+                        'description': place.description,
+                        'category': place.category,
+                        'fee': place.fee,
+                        'opening_hour': place.opening_hour,
+                        'similarity': similarity} for place, similarity in sorted_places]
+
+        print(place_location, user_message)
+        print(suggestions)
+
+        # Send the suggestions data as JSON response
+        return JsonResponse({'suggestions': suggestions})
+
+    return render(request, 'select_sub_place_chat.html')
+
+@csrf_exempt
+def find_place_chatbox(request):
     file_path = 'main.csv'  
     df = pd.read_csv(file_path)
     
@@ -93,14 +153,19 @@ def sub_place_chatbox(request):
         suggestions = []
         for index in top_match_indices:
             match_details = df.iloc[index]
+
+            place_name = match_details['Place Name']
+
+            place = get_object_or_404(Places, place_name=place_name)
             
             suggestion = {
-                'Place Name': match_details['Place Name'],
-                'Category': match_details['Category'], 
-                'Description': match_details['Description'],
-                'Location': match_details['Location'],
-                'Entry Fee (BDT)': match_details['Entry Fee (BDT)'],
-                'Opening Hours': match_details['Opening Hours']
+                'Place Name': place.place_name,
+                'Category': place.category,
+                'Description': place.description,
+                'Location': place.location,
+                'Entry Fee': place.fee,
+                'Opening Hours': place.opening_hour,
+                'Image': place.imeage.url if place.imeage else None,
             }
             
             suggestions.append(suggestion)
@@ -109,7 +174,7 @@ def sub_place_chatbox(request):
 
         return JsonResponse({'suggestions': suggestions})
     
-    return render(request, 'select_sub_place_chat.html')
+    return render(request, 'select_place_chat.html')
 
 
 def event(request):

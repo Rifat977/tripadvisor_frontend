@@ -54,29 +54,14 @@
                 
                 <div class="col-4 p-3 text-dark rouneded" style="background-color: #186BCB29;">
                     <h5 class="card-title border-bottom border-dark">Selected</h5>
-                    <ul id="selectedItemsList">
+                    <ul>
                     </ul>
-                    <a href="{% url 'hotels' %}">
+                    <a href="{% url 'sub_place_chatbox' %}">
                         <button class="rounded-pill btn btn-dark btn-sm">Next</button>
                     </a>
                 </div>
             </div>
-                    <div id="chat-suggestions">
-                        <!-- {% for suggestion in sorted_places %}
-                        <div class="card">
-                            <div class="card-body">
-                            <h5 class="card-title">{{ suggestion.place_name }}</h5>
-                            <p class="card-text">
-                                Category: {{ suggestion.category }} <br>
-                                Description: {{ suggestion.description }} <br>
-                                Location: {{ suggestion.location }} <br>
-                                Entry Fee (BDT): {{ suggestion.entry_fee }} <br>
-                                Opening Hours: {{ suggestion.opening_hours }}
-                            </p>
-                            </div>
-                        </div>
-                        {% endfor %} -->
-                    </div>
+                    <div id="chat-suggestions"></div>
         </div>
         <div class="col-md-4 col-12">
             <!-- Chat Box -->
@@ -116,26 +101,7 @@
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-
-    function getSelectedItem() {
-        var selectedItems = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
-
-        // Get the list element
-        var listElement = document.getElementById('selectedItemsList');
-
-        // Clear existing items in the list
-        listElement.innerHTML = '';
-
-        // Display selected items in the list
-        selectedItems.forEach(function(item) {
-            var listItem = document.createElement('li');
-            listItem.textContent = item;
-            listElement.appendChild(listItem);
-        });
-    }
-
-    getSelectedItem()
-
+    localStorage.clear()
     var selectedPlaces = new Set();
 
     function getSelectedPlacesFromLocalStorage() {
@@ -153,12 +119,11 @@
 
     function sendMessage() {
         var userInput = document.getElementById("user-input").value;
-        var selectedItem = JSON.parse(localStorage.getItem('selectedPlaces'));
         if (userInput.trim() !== "") {
             $.ajax({
-                url: "/sub_place_chatbox",
+                url: "/find_place_chatbox",
                 method: "POST",
-                data: { userInput: userInput, selectedItem: selectedItem[0]},
+                data: { userInput: userInput },
                 success: function (response) {
 
                     var chatSuggestions = document.getElementById("chat-suggestions");
@@ -176,8 +141,7 @@
 
                     if (response.suggestions && response.suggestions.length > 0) {
                         response.suggestions.forEach(function (suggestion) {
-
-                            var placeName = suggestion['place_name'];
+                            var placeName = suggestion['Place Name'];
 
                             if (!selectedPlaces.has(placeName)) {
                                 var card = document.createElement("div");
@@ -194,11 +158,11 @@
 
                                 cardBody.innerHTML = "<h5 class='card-title'>" + placeName + "</h5>" +
                                     "<p class='card-text'>" +
-                                    "Category: " + suggestion['category'] + "<br>" +
-                                    "Description: " + suggestion['description'] + "<br>" +
-                                    "Location: " + suggestion['location'] + "<br>" +
-                                    "Entry Fee (BDT): " + suggestion['fee'] + "<br>" +
-                                    "Opening Hours: " + suggestion['opening_hour'] +
+                                    "Category: " + suggestion['Category'] + "<br>" +
+                                    "Description: " + suggestion['Description'] + "<br>" +
+                                    "Location: " + suggestion['Location'] + "<br>" +
+                                    "Entry Fee (BDT): " + suggestion['Entry Fee (BDT)'] + "<br>" +
+                                    "Opening Hours: " + suggestion['Opening Hours'] +
                                     "</p>";
 
                                 card.appendChild(cardBody);

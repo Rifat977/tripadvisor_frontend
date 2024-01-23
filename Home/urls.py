@@ -15,6 +15,7 @@ urlpatterns = [
    path('chat', chat, name="Rendiring place chat page"),
    path('sub_place', sub_place, name="Rendiring place chat page"),
    path('select_sub_place', sub_sub_place, name="Rendiring place chat page"),
+   path('find_place_chatbox', find_place_chatbox, name="find_place_chatbox"),
    path('sub_place_chatbox', sub_place_chatbox, name="sub_place_chatbox"),
    path('hotels', hotels, name="hotels"),
 
