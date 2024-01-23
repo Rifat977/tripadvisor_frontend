@@ -178,4 +178,22 @@ def profile(request):
     else:
 
         return redirect('/auth/login')
-        
+          
+
+def save_main_csv(request):
+
+
+    df = pd.read_csv('main.csv', header=None)
+    for i, row in df.iterrows():
+
+        print(row[0])
+        place_name = row[0]
+        category = row[1]
+        description = row[2]
+        location = row[3]
+        fee = row[4]
+        opening_hour = row[5]
+
+        objj = Places.objects.create(place_name=place_name,category=category,description=description,location=location,fee=fee,opening_hour=opening_hour)
+        objj.save()
+    return JsonResponse({'hello':'world'})

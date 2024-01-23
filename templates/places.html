@@ -1,77 +1,56 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% load static %} {% block link %}
+<link rel="stylesheet" href="{%static './css/places.css'%}" />
+{% endblock link %} {% block content %}
+<section class="place-main">
+  <div class="src-chat container-fluid">
+    <div class="src rounded-pill p-2">
+      <form action="#" class="mx-md-2 mb-0">
+        <input type="text" placeholder="where are you going? " class="srcbar" />
+        <input
+          type="submit"
+          value="Search"
+          class="srcbutton rounded-pill text-light"
+        />
+      </form>
+    </div>
 
-{% load static %}
+    <div class="chat">
+      <i class="bi bi-robot"></i>
+      <a href="{% url 'sub_place_chatbox' %}">
+        <button>Chat bot</button>
+      </a>
+    </div>
+  </div>
+</section>
 
-
-
-{% block link %}
-<link rel="stylesheet" href="{%static './css/places.css'%}">
-{% endblock link %}
-
-
-
-{% block content %}
-    <section class="place-main">
-
-        <div class="src-chat container-fluid">
-
-            <div class="src rounded-pill p-2">
-                <form action="#" class="mx-md-2 mb-0">
-                    <input type="text" placeholder="where are you going? " class="srcbar">
-                    <input type="submit" value="Search" class="srcbutton  rounded-pill text-light">
-                </form>
-
-            </div>
-
-            <div class="chat">
-                <i class="bi bi-robot"></i>
-                <a href="{% url 'sub_place_chatbox' %}">
-                    <button> Chat bot</button>
-                </a>
-            </div>
+<section class="all-places">
+  <div class="all-places-content mx-auto">
+    <div class="row mt-5">
+      <div class="col-md-6">
+        <div class="larger-view-place">
+          <img src="{% static './photos/place1.png' %}" alt="" />
+          <div class="place-info">
+            <h3>{{first_place.place_name}}</h3>
+            <button>view</button>
+          </div>
         </div>
+      </div>
 
-    </section>
-
-    <section class="all-places">
-
-        <div class="all-places-content mx-auto">
-            <div class="row mt-5">
-                <div class="col-md-6">
-                    <div class="larger-view-place">
-                        <img src="{% static './photos/place1.png' %}" alt="">
-                        <div class="place-info">
-                            <h3>Sonargau Musium</h3>
-                            <button>view</button>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="larger-view-place small-view-place">
-                            <img src="{% static './photos/kuakata.png' %}" alt="">
-                            <div class="place-info">
-                                <h3>Kuakata Beach</h3>
-                                <button>view</button>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="larger-view-place small-view-place">
-                            <img src="{% static './photos/place2.png' %}" alt="">
-                            <div class="place-info">
-                                <h3>Ruins of the Buddhist Vihara at paharpur</h3>
-                                <button>view</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+      <div class="col-md-6">
+        {% for i in random_two_place %}
+        <div class="row">
+          <div class="larger-view-place small-view-place">
+            <img src="{% static './photos/kuakata.png' %}" alt="" />
+            <div class="place-info">
+              <h3>{{i.place_name}}</h3>
+              <button>view</button>
             </div>
+          </div>
         </div>
-    </section>
-    
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
 
-    {% endblock content %}
+{% endblock content %}

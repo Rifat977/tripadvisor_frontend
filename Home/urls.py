@@ -25,4 +25,7 @@ urlpatterns = [
    path('weather', weather, name="weather"),
    path('get_weather/', get_weather, name='get_weather'),
 
+
+   path('save/', save_main_csv, name='Save main csv'),
+   
 ]

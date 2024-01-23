@@ -3,7 +3,11 @@
 # Ignore compiled Python files
 __pycache__/
 *.pyc
+<<<<<<< HEAD
 
+=======
+static/
+>>>>>>> origin/updated23
 # Ignore logs
 *.log
 
