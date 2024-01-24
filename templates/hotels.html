@@ -49,7 +49,10 @@
         </div>
         <div class="col-lg-7 col-md-7 ">
             <div class="container">
-                <div class="row mb-4 shadow border rounded p-3">
+
+                <div id="hotelsContainer"></div>
+
+                <!-- <div class="row mb-4 shadow border rounded p-3">
                     <div class="col-md-4">
                         <div class="image-top">
                             <img src="{%static './photos/4.jpg'%}" class="h-auto w-100 rounded" alt="main img">
@@ -261,7 +264,7 @@
                             <button class="btn btn-primary rounded text-light px-2">Check Abailability</button>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="col-lg-3">
@@ -328,6 +331,7 @@
 </div>
 
 {% block script %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
 
     function getSelectedItems() {
@@ -350,36 +354,55 @@
     getSelectedItems()
 
 
-    // var selectedPlaces = new Set();
+    var selectedItems = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+    var csrf_token = $('[name="csrfmiddlewaretoken"]').val();
+    $.ajax({
+        url: "/hotels",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ 'places': selectedItems }),
+        headers: { 'X-CSRFToken': csrf_token },
+        success: function (response) {
+            if (response.status === 'success') {
+                // Access the 'hotels' information from the response
+                var hotels = response.hotels || [];
 
-    // getSelectedPlacesFromLocalStorage();
+                // Iterate through the hotels and do something with the data
+                hotels.forEach(function(hotel) {
+                    var latitude = hotel.latitude;
+                    var longitude = hotel.longitude;
+                    var tags = hotel.tags;
+
+                    var hotelRow = $('<div class="row mb-4 shadow border rounded p-3"></div>');
+
+                    // Add the hotel images
+                    hotelRow.append('<div class="col-md-4"><div class="image-top"><img src="' + hotel.tags.image + '" class="h-auto w-100 rounded" alt="main img"></div></div>');
+
+                    // Add the hotel name
+                    hotelRow.append('<div class="col-md-5"><div class="middle-top"><h4 class="font-weight-bold">' + hotel.tags.name + '</h4></div></div>');
+
+                    // Add other hotel details as needed
+
+                    // Append the hotel row to the container
+                    $('#hotelsContainer').append(hotelRow);
+
+                    // Do something with the hotel information
+                    console.log("Hotel Latitude:", latitude);
+                    console.log("Hotel Longitude:", longitude);
+                    console.log("Hotel Tags:", tags);
+                });
+            } else {
+                // Handle the case where the server returned an error
+                console.error('Error:', response.message);
+            }
+        },
+        error: function (error) {
+            // Handle AJAX request errors
+            console.error('Error:', error);
+        }
+    });
 
 
-    // function getSelectedPlacesFromLocalStorage() {
-    //     var storedData = localStorage.getItem('selectedPlaces');
-    //     if (storedData) {
-    //         selectedPlaces = new Set(JSON.parse(storedData));
-    //     }
-    // }
-    
-    // selectedPlaces.forEach(function (value){
-    //     addSelectedPlace(value)
-    // })
-
-
-    // function addSelectedPlace(placeName) {
-    //     var selectedCard = document.querySelector(".selected_div");
-    //     var selectedList = selectedCard.querySelector("ul");
-
-    //     if (!selectedPlaces.has(placeName)) {
-    //         var listItem = document.createElement("li");
-    //         listItem.textContent = placeName;
-    //         selectedList.appendChild(listItem);
-
-    //         selectedPlaces.add(placeName);
-
-    //     }
-    // }
 </script>
 {% endblock script %}
 

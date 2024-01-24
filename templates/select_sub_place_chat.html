@@ -62,20 +62,7 @@
                 </div>
             </div>
                     <div id="chat-suggestions">
-                        <!-- {% for suggestion in sorted_places %}
-                        <div class="card">
-                            <div class="card-body">
-                            <h5 class="card-title">{{ suggestion.place_name }}</h5>
-                            <p class="card-text">
-                                Category: {{ suggestion.category }} <br>
-                                Description: {{ suggestion.description }} <br>
-                                Location: {{ suggestion.location }} <br>
-                                Entry Fee (BDT): {{ suggestion.entry_fee }} <br>
-                                Opening Hours: {{ suggestion.opening_hours }}
-                            </p>
-                            </div>
-                        </div>
-                        {% endfor %} -->
+                        
                     </div>
         </div>
         <div class="col-md-4 col-12">
@@ -120,13 +107,10 @@
     function getSelectedItem() {
         var selectedItems = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
 
-        // Get the list element
         var listElement = document.getElementById('selectedItemsList');
 
-        // Clear existing items in the list
         listElement.innerHTML = '';
 
-        // Display selected items in the list
         selectedItems.forEach(function(item) {
             var listItem = document.createElement('li');
             listItem.textContent = item;

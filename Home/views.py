@@ -8,6 +8,10 @@ from authentication.models import User
 from blog.models import *
 from .models import *
 
+from .accom import *
+
+import json
+
 from django.shortcuts import render, get_object_or_404
 
 from django.apps import apps
@@ -32,13 +36,58 @@ from scipy.sparse import vstack
 
 import os
 
-
 def home(request):
     blogs = Blog.objects.all().order_by('-id')[:5]
     return render(request,'home.html', context={'blogs':blogs})
 
+@csrf_exempt
 def hotels(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            places = data.get('places', [])
+
+            if not places:
+                return JsonResponse({'status': 'error', 'message': 'No places provided'}, status=400)
+
+            place_name = places[0]
+
+            place = get_object_or_404(Places, place_name=place_name)
+
+            location = place.location
+
+            print(location)
+
+            # Get coordinates using the Nominatim API
+            coordinates = get_coordinates(api_key=None, location=location)
+
+            if coordinates:
+                # Specify the search radius in meters (optional, default is 1000 meters)
+                radius = 2000
+                # Search for hotels using the Overpass API
+                hotels = search_hotels(api_key=None, coordinates=coordinates, radius=radius)
+
+                # Accumulate hotel information in a list
+                hotels_info = []
+
+                for hotel in hotels:
+                    lat = hotel.get('lat', 'N/A')
+                    lon = hotel.get('lon', 'N/A')
+                    tags = hotel.get('tags', {})
+                    
+                    # Check if 'name' attribute exists in 'tags' dictionary
+                    if 'name' in tags:
+                        hotel_info = {'latitude': lat, 'longitude': lon, 'tags': tags}
+                        hotels_info.append(hotel_info)
+
+                return JsonResponse({'status': 'success', 'hotels': hotels_info})
+            else:
+                return JsonResponse({'status': 'error', 'message': 'Unable to get coordinates for the location'}, status=400)
+        except json.JSONDecodeError as e:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON data'}, status=400)
+
     return render(request, 'hotels.html')
+
 
 def info(request):
     return render(request, 'info.html')
@@ -65,39 +114,32 @@ def sub_place_chatbox(request):
     file_path = 'main.csv'  
     df = pd.read_csv(file_path)
 
-    # Assuming 'Places' is the model representing your places
     Places = apps.get_model('Home', 'Places')
 
     if request.method == 'POST':
         user_message = request.POST.get('userInput', '')
         place_name = request.POST.get('selectedItem', '')
 
-        # Get the selected place location
         place = get_object_or_404(Places, place_name=place_name)
         place_location = place.location
         if "," in place_location:
             place_location = place_location.split(",")[1]
 
-        # Filter places where Location contains place_location from CSV
+
         filtered_places = Places.objects.filter(location__icontains=place_location)
 
-        # Calculate cosine similarity based on user message
         vectorizer = TfidfVectorizer()
         documents = df[['Place Name', 'Description', 'Category']].fillna('').values.tolist()
         user_vector = vectorizer.fit_transform([user_message])
         document_vectors = vectorizer.transform([' '.join(doc) for doc in documents])
         similarities = cosine_similarity(user_vector, document_vectors).flatten()
 
-        # Combine similarity scores with the filtered places
         place_similarity_mapping = dict(zip(filtered_places, similarities))
 
-        # Filter places with similarity greater than 0
         sorted_places = [(place, similarity) for place, similarity in place_similarity_mapping.items() if similarity > 0]
 
-        # Sort places by similarity score
         sorted_places = sorted(sorted_places, key=lambda x: x[1], reverse=True)
         
-        # Prepare a list of dictionaries containing all fields for each place
         suggestions = [{'place_name': place.place_name,
                         'location': place.location,
                         'description': place.description,
@@ -109,7 +151,6 @@ def sub_place_chatbox(request):
         print(place_location, user_message)
         print(suggestions)
 
-        # Send the suggestions data as JSON response
         return JsonResponse({'suggestions': suggestions})
 
     return render(request, 'select_sub_place_chat.html')
