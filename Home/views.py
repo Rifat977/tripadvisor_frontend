@@ -16,6 +16,8 @@ from django.shortcuts import render, get_object_or_404
 
 from django.apps import apps
 
+from math import radians, sin, cos, sqrt, atan2
+
 # import pandas as pd
 # from sklearn.feature_extraction.text import TfidfVectorizer
 # from sklearn.metrics.pairwise import cosine_similarity
@@ -36,58 +38,64 @@ from scipy.sparse import vstack
 
 import os
 
+def calculate_distance(lat1, lon1, lat2, lon2):
+    # Radius of the Earth in kilometers
+    R = 6371.0
+
+    # Convert latitude and longitude from degrees to radians
+    lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
+
+    # Differences in coordinates
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+
+    # Haversine formula
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    # Distance in kilometers
+    distance = R * c
+
+    return distance
+
 def home(request):
     blogs = Blog.objects.all().order_by('-id')[:5]
     return render(request,'home.html', context={'blogs':blogs})
 
 @csrf_exempt
 def hotels(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body.decode('utf-8'))
-            places = data.get('places', [])
+    place_name = request.GET.get('placeName', None)
+    place = get_object_or_404(Places, place_name=place_name)
 
-            if not places:
-                return JsonResponse({'status': 'error', 'message': 'No places provided'}, status=400)
+    location = place.location
 
-            place_name = places[0]
+    print(location)
 
-            place = get_object_or_404(Places, place_name=place_name)
+    hotels_info = []
 
-            location = place.location
+    coordinates = get_coordinates(api_key=None, location=location)
 
-            print(location)
+    if coordinates:
+        radius = 20000
+        hotels = search_hotels(api_key=None, coordinates=coordinates, radius=radius, search_type='amenity', search_vlaue='bar')
 
-            # Get coordinates using the Nominatim API
-            coordinates = get_coordinates(api_key=None, location=location)
+        for hotel in hotels:
+            lat = hotel.get('lat', 'N/A')
+            lon = hotel.get('lon', 'N/A')
+            tags = hotel.get('tags', {})
+            
+            if 'name' in tags:
+                hotel_info = {'latitude': lat, 'longitude': lon, 'tags': tags}
+                
+                distance = calculate_distance(coordinates[0], coordinates[1], float(lat), float(lon))
+                hotel_info['distance'] = round(distance, 2)
 
-            if coordinates:
-                # Specify the search radius in meters (optional, default is 1000 meters)
-                radius = 2000
-                # Search for hotels using the Overpass API
-                hotels = search_hotels(api_key=None, coordinates=coordinates, radius=radius)
+                hotels_info.append(hotel_info)
 
-                # Accumulate hotel information in a list
-                hotels_info = []
+    sorted_hotels_info = sorted(hotels_info, key=lambda x: x['distance'])
 
-                for hotel in hotels:
-                    lat = hotel.get('lat', 'N/A')
-                    lon = hotel.get('lon', 'N/A')
-                    tags = hotel.get('tags', {})
-                    
-                    # Check if 'name' attribute exists in 'tags' dictionary
-                    if 'name' in tags:
-                        hotel_info = {'latitude': lat, 'longitude': lon, 'tags': tags}
-                        hotels_info.append(hotel_info)
-
-                return JsonResponse({'status': 'success', 'hotels': hotels_info})
-            else:
-                return JsonResponse({'status': 'error', 'message': 'Unable to get coordinates for the location'}, status=400)
-        except json.JSONDecodeError as e:
-            return JsonResponse({'status': 'error', 'message': 'Invalid JSON data'}, status=400)
-
-    return render(request, 'hotels.html')
-
+    return render(request, 'hotels.html', {'hotels': sorted_hotels_info, 'location': location})
+    
 
 def info(request):
     return render(request, 'info.html')

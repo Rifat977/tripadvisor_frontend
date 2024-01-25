@@ -50,79 +50,7 @@
         <div class="col-lg-7 col-md-7 ">
             <div class="container">
 
-                <div id="hotelsContainer"></div>
-
-                <!-- <div class="row mb-4 shadow border rounded p-3">
-                    <div class="col-md-4">
-                        <div class="image-top">
-                            <img src="{%static './photos/4.jpg'%}" class="h-auto w-100 rounded" alt="main img">
-                        </div>
-                        <div class="row">
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="middle-top">
-                            <h4 class="font-weight-bold">Hotel Khan Palace</h4>
-                        </div>
-                        <div class="row no-gutters">
-                            <div class="col-md-3">
-                                <div class="rating">
-                                    <i class="fa-regular fa-star rating-icon"></i>
-                                    <i class="fa-regular fa-star rating-icon"></i>
-                                    <i class="fa-regular fa-star rating-icon"></i>
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <span>Kuakata, Kuakata -</span>
-                                <span><a href="#">View on map</a></span>
-                            </div>
-                        </div>
-
-
-                        <div class="space mt-2">
-                            <p>Car Park</p>
-                            <p>Free Wifi In All Rooms</p>
-                            <p>+6</p>
-                        </div>
-                        <p class="middle-text mt-3 h6">"All Over Very Good Service"</p>
-                        <p class="middle-text-last mt-3 text-center">Distance cover for you sight 3km</p>
-                    </div>
-                    <div class="col-md-3 text-right">
-                        <div class="row no-gutters">
-                            <div class="col-12">
-                                <h6>Very Good</h6>
-                                <p>21 Reviews</p>
-                            </div>
-                        </div>
-                        <div class="">
-                            <i class="fa-regular fa-3x fa-circle-check"></i>
-                        </div>
-                        <div class="right-content-bottom mt-2">
-                            <h5 class="font-weight-bold">Average Per Night</h5>
-                            <h5 class="font-weight-bold">1500 Tk.</h5>
-                            <button class="btn btn-primary rounded text-light px-2">Check Abailability</button>
-                        </div>
-                    </div>
-                </div>
+                {% for hotel in hotels %}
                 <div class="row mb-4 shadow border rounded p-3">
                     <div class="col-md-4">
                         <div class="image-top">
@@ -151,7 +79,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="middle-top">
-                            <h4 class="font-weight-bold">Hotel Khan Palace</h4>
+                            <h4 class="font-weight-bold">{{ hotel.tags.name }}</h4>
                         </div>
                         <div class="row no-gutters">
                             <div class="col-md-3">
@@ -163,7 +91,7 @@
                             </div>
                             <div class="col-md-9">
                                 <i class="fa-solid fa-location-dot"></i>
-                                <span>Kuakata, Kuakata -</span>
+                                <span>{{ location }} -</span>
                                 <span><a href="#">View on map</a></span>
                             </div>
                         </div>
@@ -175,12 +103,12 @@
                             <p>+6</p>
                         </div>
                         <p class="middle-text mt-3 h6">"All Over Very Good Service"</p>
-                        <p class="middle-text-last mt-3 text-center">Distance cover for you sight 3km</p>
+                        <p class="middle-text-last mt-3 text-center">Distance cover for you sight  {{hotel.distance}}km</p>
                     </div>
                     <div class="col-md-3 text-right">
                         <div class="row no-gutters">
                             <div class="col-12">
-                                <h6>Very Good</h6>
+                                <h6>{{ hotel.tags.tourism|upper }}</h6>
                                 <p>21 Reviews</p>
                             </div>
                         </div>
@@ -194,77 +122,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-4 shadow border rounded p-3">
-                    <div class="col-md-4">
-                        <div class="image-top">
-                            <img src="{%static './photos/4.jpg'%}" class="h-auto w-100 rounded" alt="main img">
-                        </div>
-                        <div class="row">
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                            <div class="col-4 mt-2">
-                                <img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img-1">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="middle-top">
-                            <h4 class="font-weight-bold">Hotel Khan Palace</h4>
-                        </div>
-                        <div class="row no-gutters">
-                            <div class="col-md-3">
-                                <div class="rating">
-                                    <i class="fa-regular fa-star rating-icon"></i>
-                                    <i class="fa-regular fa-star rating-icon"></i>
-                                    <i class="fa-regular fa-star rating-icon"></i>
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <span>Kuakata, Kuakata -</span>
-                                <span><a href="#">View on map</a></span>
-                            </div>
-                        </div>
-
-
-                        <div class="space mt-2">
-                            <p>Car Park</p>
-                            <p>Free Wifi In All Rooms</p>
-                            <p>+6</p>
-                        </div>
-                        <p class="middle-text mt-3 h6">"All Over Very Good Service"</p>
-                        <p class="middle-text-last mt-3 text-center">Distance cover for you sight 3km</p>
-                    </div>
-                    <div class="col-md-3 text-right">
-                        <div class="row no-gutters">
-                            <div class="col-12">
-                                <h6>Very Good</h6>
-                                <p>21 Reviews</p>
-                            </div>
-                        </div>
-                        <div class="">
-                            <i class="fa-regular fa-3x fa-circle-check"></i>
-                        </div>
-                        <div class="right-content-bottom mt-2">
-                            <h5 class="font-weight-bold">Average Per Night</h5>
-                            <h5 class="font-weight-bold">1500 Tk.</h5>
-                            <button class="btn btn-primary rounded text-light px-2">Check Abailability</button>
-                        </div>
-                    </div>
-                </div> -->
+                {% endfor %}
             </div>
         </div>
         <div class="col-lg-3">
@@ -275,6 +133,7 @@
                     </ul>
                     <button class="btn btn-success rounded-pill">Submit</button>
                 </div>
+                
                 
                 <div class="col-lg-12 mt-5 p-2 bottom-right">
                     <h4 class="">Plan</p>
@@ -352,55 +211,6 @@
     }
 
     getSelectedItems()
-
-
-    var selectedItems = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
-    var csrf_token = $('[name="csrfmiddlewaretoken"]').val();
-    $.ajax({
-        url: "/hotels",
-        method: "POST",
-        contentType: "application/json",
-        data: JSON.stringify({ 'places': selectedItems }),
-        headers: { 'X-CSRFToken': csrf_token },
-        success: function (response) {
-            if (response.status === 'success') {
-                // Access the 'hotels' information from the response
-                var hotels = response.hotels || [];
-
-                // Iterate through the hotels and do something with the data
-                hotels.forEach(function(hotel) {
-                    var latitude = hotel.latitude;
-                    var longitude = hotel.longitude;
-                    var tags = hotel.tags;
-
-                    var hotelRow = $('<div class="row mb-4 shadow border rounded p-3"></div>');
-
-                    // Add the hotel images
-                    hotelRow.append('<div class="col-md-4"><div class="image-top"><img src="' + hotel.tags.image + '" class="h-auto w-100 rounded" alt="main img"></div></div>');
-
-                    // Add the hotel name
-                    hotelRow.append('<div class="col-md-5"><div class="middle-top"><h4 class="font-weight-bold">' + hotel.tags.name + '</h4></div></div>');
-
-                    // Add other hotel details as needed
-
-                    // Append the hotel row to the container
-                    $('#hotelsContainer').append(hotelRow);
-
-                    // Do something with the hotel information
-                    console.log("Hotel Latitude:", latitude);
-                    console.log("Hotel Longitude:", longitude);
-                    console.log("Hotel Tags:", tags);
-                });
-            } else {
-                // Handle the case where the server returned an error
-                console.error('Error:', response.message);
-            }
-        },
-        error: function (error) {
-            // Handle AJAX request errors
-            console.error('Error:', error);
-        }
-    });
 
 
 </script>

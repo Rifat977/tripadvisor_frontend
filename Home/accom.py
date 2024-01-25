@@ -16,37 +16,21 @@ def get_coordinates(api_key, location):
         print(f"Location '{location}' not found.")
         return None
 
-def search_hotels(api_key, coordinates, radius=1000):
+def search_hotels(api_key, coordinates, radius=1000, search_type='tourism', search_vlaue='hotel'):
     base_url = "https://overpass-api.de/api/interpreter"
     query = (
         f"[out:json];"
-        f"node(around:{radius},{coordinates[0]},{coordinates[1]})['tourism'='hotel'];"
+        f"node(around:{radius},{coordinates[0]},{coordinates[1]})['{search_type}'='{search_vlaue}'];"
         f"out;"
     )
     response = requests.post(base_url, data=query)
     data = response.json()
 
+    print(data)
+
     if 'elements' in data:
         return data['elements']
 
-    # Process the search results
-    # if 'elements' in data:
-    #     hotels = data['elements']
-    #     for hotel in hotels:
-    #         print("Hotel Details:")
-    #         print(f"  Type: {hotel.get('type', 'N/A')}")
-    #         print(f"  ID: {hotel.get('id', 'N/A')}")
-    #         print(f"  Latitude: {hotel.get('lat', 'N/A')}")
-    #         print(f"  Longitude: {hotel.get('lon', 'N/A')}")
-            
-    #         tags = hotel.get('tags', {})
-    #         print("  Tags:")
-    #         for key, value in tags.items():
-    #             print(f"    {key}: {value}")
-
-    #         print('-' * 30)
-    # else:
-    #     print("No results found.")
 if __name__ == "__main__":
     # Specify the location (Dhaka, Bangladesh)
     location = "Dhaka, Bangladesh"

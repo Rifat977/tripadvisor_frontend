@@ -56,9 +56,7 @@
                     <h5 class="card-title border-bottom border-dark">Selected</h5>
                     <ul id="selectedItemsList">
                     </ul>
-                    <a href="{% url 'hotels' %}">
-                        <button class="rounded-pill btn btn-dark btn-sm">Next</button>
-                    </a>
+                    <button class="rounded-pill btn btn-dark btn-sm next-button" id="next-button">Next</button>
                 </div>
             </div>
                     <div id="chat-suggestions">
@@ -103,6 +101,18 @@
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+
+    var placeNames = JSON.parse(localStorage.getItem('selectedPlaces')) || []
+
+    var subPlaceName = placeNames[placeNames.length - 1]
+
+    document.getElementById('next-button').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        var redirectUrl = "/hotels?placeName=" + encodeURIComponent(placeNames[0]);
+
+        window.location.href = redirectUrl;
+    });
 
     function getSelectedItem() {
         var selectedItems = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
