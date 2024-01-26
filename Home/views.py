@@ -36,24 +36,19 @@ from scipy.sparse import vstack
 # nltk.download('punkt')
 # nltk.download('wordnet')
 
-import os
+import os, time, random
 
 def calculate_distance(lat1, lon1, lat2, lon2):
-    # Radius of the Earth in kilometers
     R = 6371.0
 
-    # Convert latitude and longitude from degrees to radians
     lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
 
-    # Differences in coordinates
     dlat = lat2 - lat1
     dlon = lon2 - lon1
 
-    # Haversine formula
     a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
-    # Distance in kilometers
     distance = R * c
 
     return distance
@@ -64,37 +59,41 @@ def home(request):
 
 @csrf_exempt
 def hotels(request):
-    place_name = request.GET.get('placeName', None)
-    place = get_object_or_404(Places, place_name=place_name)
-
-    location = place.location
-
-    print(location)
+    place_names_param = request.GET.get('placeNames', '')
+    place_names = place_names_param.split(',')
 
     hotels_info = []
 
-    coordinates = get_coordinates(api_key=None, location=location)
 
-    if coordinates:
-        radius = 20000
-        hotels = search_hotels(api_key=None, coordinates=coordinates, radius=radius, search_type='amenity', search_vlaue='bar')
 
-        for hotel in hotels:
-            lat = hotel.get('lat', 'N/A')
-            lon = hotel.get('lon', 'N/A')
-            tags = hotel.get('tags', {})
-            
-            if 'name' in tags:
-                hotel_info = {'latitude': lat, 'longitude': lon, 'tags': tags}
+    for place_name in place_names:
+        place = get_object_or_404(Places, place_name=place_name)
+
+        location = place.location
+        location = location.split(",")
+        location = location[len(location) - 1]
+        coordinates = get_coordinates(api_key=None, location=place.location)
+
+        if coordinates:
+            radius = 2000
+            hotels = search_hotels(api_key=None, coordinates=coordinates, radius=radius)
+
+            for hotel in hotels:
+                lat = hotel.get('lat', 'N/A')
+                lon = hotel.get('lon', 'N/A')
+                tags = hotel.get('tags', {})
                 
-                distance = calculate_distance(coordinates[0], coordinates[1], float(lat), float(lon))
-                hotel_info['distance'] = round(distance, 2)
+                if 'name' in tags:
+                    hotel_info = {'latitude': lat, 'longitude': lon, 'tags': tags, 'place_name': place_name, 'location': place.location, 'random_number': random.randint(0, 99)}
+                    
+                    distance = calculate_distance(coordinates[0], coordinates[1], float(lat), float(lon))
+                    hotel_info['distance'] = round(distance, 2)
 
-                hotels_info.append(hotel_info)
+                    hotels_info.append(hotel_info)
 
     sorted_hotels_info = sorted(hotels_info, key=lambda x: x['distance'])
 
-    return render(request, 'hotels.html', {'hotels': sorted_hotels_info, 'location': location})
+    return render(request, 'hotels.html', {'hotels': sorted_hotels_info})
     
 
 def info(request):
@@ -119,13 +118,12 @@ def sub_sub_place(request):
 
 @csrf_exempt
 def sub_place_chatbox(request):
-    file_path = 'main.csv'  
+    file_path = 'main.csv'
     df = pd.read_csv(file_path)
 
     Places = apps.get_model('Home', 'Places')
 
     if request.method == 'POST':
-        user_message = request.POST.get('userInput', '')
         place_name = request.POST.get('selectedItem', '')
 
         place = get_object_or_404(Places, place_name=place_name)
@@ -133,30 +131,18 @@ def sub_place_chatbox(request):
         if "," in place_location:
             place_location = place_location.split(",")[1]
 
-
         filtered_places = Places.objects.filter(location__icontains=place_location)
 
-        vectorizer = TfidfVectorizer()
-        documents = df[['Place Name', 'Description', 'Category']].fillna('').values.tolist()
-        user_vector = vectorizer.fit_transform([user_message])
-        document_vectors = vectorizer.transform([' '.join(doc) for doc in documents])
-        similarities = cosine_similarity(user_vector, document_vectors).flatten()
 
-        place_similarity_mapping = dict(zip(filtered_places, similarities))
-
-        sorted_places = [(place, similarity) for place, similarity in place_similarity_mapping.items() if similarity > 0]
-
-        sorted_places = sorted(sorted_places, key=lambda x: x[1], reverse=True)
-        
         suggestions = [{'place_name': place.place_name,
                         'location': place.location,
                         'description': place.description,
                         'category': place.category,
                         'fee': place.fee,
                         'opening_hour': place.opening_hour,
-                        'similarity': similarity} for place, similarity in sorted_places]
+                        } for place in filtered_places]
 
-        print(place_location, user_message)
+        print(place_location)
         print(suggestions)
 
         return JsonResponse({'suggestions': suggestions})
@@ -197,7 +183,7 @@ def find_place_chatbox(request):
         cosine_similarities = cosine_similarity(user_message_vector, places_vectors).flatten()
 
         # Get the index of the top match
-        top_match_indices = cosine_similarities.argsort()[::-1][:2]
+        top_match_indices = cosine_similarities.argsort()[::-1][:5]
     
         suggestions = []
         for index in top_match_indices:
@@ -205,19 +191,29 @@ def find_place_chatbox(request):
 
             place_name = match_details['Place Name']
 
-            place = get_object_or_404(Places, place_name=place_name)
-            
-            suggestion = {
-                'Place Name': place.place_name,
-                'Category': place.category,
-                'Description': place.description,
-                'Location': place.location,
-                'Entry Fee': place.fee,
-                'Opening Hours': place.opening_hour,
-                'Image': place.imeage.url if place.imeage else None,
-            }
-            
-            suggestions.append(suggestion)
+            try:
+
+                places_instances = Places.objects.filter(place_name=place_name)
+
+                if not places_instances.exists():
+                    print('Place not found')
+
+                # Assuming you want to take the first instance if there are multiple ones
+                place = places_instances.first()
+                
+                suggestion = {
+                    'Place Name': place.place_name,
+                    'Category': place.category,
+                    'Description': place.description,
+                    'Location': place.location,
+                    'Entry Fee': place.fee,
+                    'Opening Hours': place.opening_hour,
+                    'Image': place.imeage.url if place.imeage else None,
+                }
+                
+                suggestions.append(suggestion)
+            except Exception as e:
+                print(e)
 
         print(suggestions)
 

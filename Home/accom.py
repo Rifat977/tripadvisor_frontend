@@ -21,15 +21,17 @@ def search_hotels(api_key, coordinates, radius=1000, search_type='tourism', sear
     query = (
         f"[out:json];"
         f"node(around:{radius},{coordinates[0]},{coordinates[1]})['{search_type}'='{search_vlaue}'];"
-        f"out;"
+        f"out center;"
     )
     response = requests.post(base_url, data=query)
     data = response.json()
 
+    print("\n===========\n")
     print(data)
 
     if 'elements' in data:
         return data['elements']
+
 
 if __name__ == "__main__":
     # Specify the location (Dhaka, Bangladesh)

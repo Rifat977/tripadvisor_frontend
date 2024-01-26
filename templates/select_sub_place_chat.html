@@ -37,11 +37,15 @@
         <input type="text" class="form-control rouneded-pill-left" placeholder="where are you going?" aria-label="Search"
             aria-describedby="basic-addon2" style="width: 70%;">
         <div class="input-group-append">
-            <button class="btn text-dark" style="background-color: #3D8ED9;" type="button">Search</button>
+            <button class="btn text-light" style="background-color: #3D8ED9;" type="button">Search</button>
         </div>
-    </div>    
+    </div>  
+    
+    <div class="text-center p-3">
+        <h3>Select Sub Place</h3>
+    </div>
 
-    <div class="row mb-5">
+    <div class="row mb-5 justify-content-center">
         <div class="col-md-8 col-12">
             <!-- Blog Card -->
             <div class="row no-gutters" style="background-color: #0DAB832E;">
@@ -63,15 +67,13 @@
                         
                     </div>
         </div>
-        <div class="col-md-4 col-12">
-            <!-- Chat Box -->
+        <!-- <div class="col-md-4 col-12">
             <div class="card">
                 <div class="card-header text-white" style="background-color: #0DAB83;">
                     Chat Box
                 </div>
                 <div class="card-body" style="height: 450px; overflow-y: auto; background-color: #D9D9D9;" id="chat-messages">
-                    <!-- <div class="message received mr-5 mb-2">Welcome to the chat!</div>
-                    <div class="message sent ml-5 mb-2">Welcome to the chat!</div> -->
+                    
                 </div>
                 <div class="input-group rounded-lg">
 
@@ -90,7 +92,7 @@
                   </div>
                 
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
@@ -101,18 +103,6 @@
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-
-    var placeNames = JSON.parse(localStorage.getItem('selectedPlaces')) || []
-
-    var subPlaceName = placeNames[placeNames.length - 1]
-
-    document.getElementById('next-button').addEventListener('click', function(e) {
-        e.preventDefault();
-
-        var redirectUrl = "/hotels?placeName=" + encodeURIComponent(placeNames[0]);
-
-        window.location.href = redirectUrl;
-    });
 
     function getSelectedItem() {
         var selectedItems = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
@@ -145,26 +135,28 @@
 
     getSelectedPlacesFromLocalStorage();
 
+    sendMessage()
+
     function sendMessage() {
-        var userInput = document.getElementById("user-input").value;
+        // var userInput = document.getElementById("user-input").value;
         var selectedItem = JSON.parse(localStorage.getItem('selectedPlaces'));
-        if (userInput.trim() !== "") {
+        if (selectedItem!== "") {
             $.ajax({
                 url: "/sub_place_chatbox",
                 method: "POST",
-                data: { userInput: userInput, selectedItem: selectedItem[0]},
+                data: {selectedItem: selectedItem[0]},
                 success: function (response) {
 
                     var chatSuggestions = document.getElementById("chat-suggestions");
                     chatSuggestions.innerHTML = "";
 
-                    var chatMessages = document.getElementById("chat-messages");
-                    // chatMessages.innerHTML = "";
+                    // var chatMessages = document.getElementById("chat-messages");
+                    // // chatMessages.innerHTML = "";
 
-                    var userMessage = document.createElement("div");
-                    userMessage.className = "message sent ml-5";
-                    userMessage.innerHTML = "<strong></strong> " + userInput;
-                    chatMessages.appendChild(userMessage);
+                    // var userMessage = document.createElement("div");
+                    // userMessage.className = "message sent ml-5";
+                    // userMessage.innerHTML = "<strong></strong> " + userInput;
+                    // chatMessages.appendChild(userMessage);
 
                     var chatSuggestions = document.getElementById("chat-suggestions");
 
@@ -232,6 +224,25 @@
         var nextButton = document.querySelector(".col-4.p-3.text-dark.rouneded button");
         nextButton.style.display = selectedPlaces.size > 0 ? "block" : "none";
     }
+
+    document.getElementById('next-button').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        var placeNames = JSON.parse(localStorage.getItem('selectedPlaces')) || []
+
+        var subPlaceName = placeNames[placeNames.length - 1]
+
+
+        var encodedPlaceNames = placeNames.map(function(place) {
+            return encodeURIComponent(place);
+        }).join(',');
+
+        var redirectUrl = "/hotels?placeNames=" + encodedPlaceNames;
+
+        window.location.href = redirectUrl;
+    });
+
+
 </script>
 {% endblock script %}
 

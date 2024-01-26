@@ -51,7 +51,7 @@
             <div class="container">
 
                 {% for hotel in hotels %}
-                <div class="row mb-4 shadow border rounded p-3">
+                <div class="row mb-4 shadow border rounded p-3 placeCard" onclick="addSelectedPlace('{{ hotel.tags.name }}')">
                     <div class="col-md-4">
                         <div class="image-top">
                             <img src="{%static './photos/4.jpg'%}" class="h-auto w-100 rounded" alt="main img">
@@ -91,7 +91,7 @@
                             </div>
                             <div class="col-md-9">
                                 <i class="fa-solid fa-location-dot"></i>
-                                <span>{{ location }} -</span>
+                                <span>{{ hotel.location }} -</span>
                                 <span><a href="#">View on map</a></span>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                         <div class="row no-gutters">
                             <div class="col-12">
                                 <h6>{{ hotel.tags.tourism|upper }}</h6>
-                                <p>21 Reviews</p>
+                                <p>{{hotel.random_number}} Reviews</p>
                             </div>
                         </div>
                         <div class="">
@@ -127,7 +127,7 @@
         </div>
         <div class="col-lg-3">
             <div class="container">
-                <div class="col-lg-12 p-3 col-md-12 rounded border" style="background-color: #186BCB29; display: flex; flex-direction: column; align-items: center;">
+                <div class="col-lg-12 p-3 col-md-12 rounded border slecting-card" style="background-color: #186BCB29; display: flex; flex-direction: column; align-items: center;">
                     <h3 class="border-bottom border-dark">Selected</h3>
                     <ul id="selectedItemsList">
                     </ul>
@@ -193,16 +193,15 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
 
+    var selectedPlaces = new Set();
+
     function getSelectedItems() {
         var selectedItems = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
 
-        // Get the list element
         var listElement = document.getElementById('selectedItemsList');
 
-        // Clear existing items in the list
         listElement.innerHTML = '';
 
-        // Display selected items in the list
         selectedItems.forEach(function(item) {
             var listItem = document.createElement('li');
             listItem.textContent = item;
@@ -211,6 +210,36 @@
     }
 
     getSelectedItems()
+
+    getSelectedPlacesFromLocalStorage();
+
+
+    function getSelectedPlacesFromLocalStorage() {
+        var storedData = localStorage.getItem('selectedPlaces');
+        if (storedData) {
+            selectedPlaces = new Set(JSON.parse(storedData));
+        }
+    }
+
+    function saveSelectedPlacesToLocalStorage() {
+        localStorage.setItem('selectedPlaces', JSON.stringify(Array.from(selectedPlaces)));
+    }
+
+    function addSelectedPlace(placeName) {
+        var selectedCard = document.querySelector(".slecting-card");
+        var selectedList = selectedCard.querySelector("ul");
+
+        if (!selectedPlaces.has(placeName)) {
+            var listItem = document.createElement("li");
+            listItem.textContent = placeName;
+            selectedList.appendChild(listItem);
+
+            selectedPlaces.add(placeName);
+
+            saveSelectedPlacesToLocalStorage();
+
+        }
+    }
 
 
 </script>
