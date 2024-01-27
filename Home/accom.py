@@ -33,6 +33,7 @@ def search_hotels(api_key, coordinates, radius=1000, search_type='tourism', sear
         return data['elements']
 
 
+
 if __name__ == "__main__":
     # Specify the location (Dhaka, Bangladesh)
     location = "Dhaka, Bangladesh"

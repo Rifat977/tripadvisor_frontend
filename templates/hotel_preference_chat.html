@@ -42,38 +42,29 @@
     </div>  
     
     <div class="text-center p-3">
-        <h3>Select Sub Place</h3>
+        <h3>Write Preference For Hotels</h3>
     </div>
 
-    <div class="row mb-5 justify-content-center">
+    <div class="row mb-5">
         <div class="col-md-8 col-12">
             <!-- Blog Card -->
             <div class="row no-gutters" style="background-color: #0DAB832E;">
-                <div class="col-8 position-relative">
-                    <img src="{% static "./photos/kuakata.png" %}" class="w-100 h-100" alt="Blog Image">
-                    <div class="position-absolute top-0 start-0 text-white">
-                        <h5 class="m-3 texti-light">Kuakata Beach</h5>
-                    </div>
-                </div>
-                
-                <div class="col-4 p-3 text-dark rouneded" style="background-color: #186BCB29;">
+                <div class="col-12 p-3 text-dark rouneded" style="background-color: #186BCB29;">
                     <h5 class="card-title border-bottom border-dark">Selected</h5>
                     <ul id="selectedItemsList">
                     </ul>
-                    <button class="rounded-pill btn btn-dark btn-sm next-button" id="next-button">Next</button>
+                        <button class="rounded-pill btn btn-dark btn-sm" id="next-button" onclick="redirectTo()">Next</button>
                 </div>
             </div>
-                    <div id="chat-suggestions">
-                        
-                    </div>
+            <div id="chat-suggestions"></div>
         </div>
-        <!-- <div class="col-md-4 col-12">
+        <div class="col-md-4 col-12">
+            <!-- Chat Box -->
             <div class="card">
                 <div class="card-header text-white" style="background-color: #0DAB83;">
                     Chat Box
                 </div>
                 <div class="card-body" style="height: 450px; overflow-y: auto; background-color: #D9D9D9;" id="chat-messages">
-                    
                 </div>
                 <div class="input-group rounded-lg">
 
@@ -92,7 +83,7 @@
                   </div>
                 
             </div>
-        </div> -->
+        </div>
     </div>
 </div>
 
@@ -103,6 +94,8 @@
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+
+    localStorage.removeItem('selectedHotels')
 
     function getSelectedItem() {
         var selectedItems = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
@@ -122,6 +115,8 @@
 
     var selectedPlaces = new Set();
 
+    var selectedHotels = new Set();
+
     function getSelectedPlacesFromLocalStorage() {
         var storedData = localStorage.getItem('selectedPlaces');
         if (storedData) {
@@ -129,46 +124,49 @@
         }
     }
 
-    function saveSelectedPlacesToLocalStorage() {
-        localStorage.setItem('selectedPlaces', JSON.stringify(Array.from(selectedPlaces)));
-    }
+    // function saveSelectedPlacesToLocalStorage() {
+    //     localStorage.setItem('selectedHotels', JSON.stringify(Array.from(selectedHotels)));
+    // }
 
     getSelectedPlacesFromLocalStorage();
 
-    sendMessage()
-
     function sendMessage() {
-        // var userInput = document.getElementById("user-input").value;
-        var selectedItem = JSON.parse(localStorage.getItem('selectedPlaces'));
-        if (selectedItem!== "") {
+        var userInput = document.getElementById("user-input").value;
+        if (userInput.trim() !== "") {
             $.ajax({
-                url: "/sub_place_chatbox",
+                url: "/hotels_preference_chatbox",
                 method: "POST",
-                data: {selectedItem: selectedItem[0]},
+                data: { userInput: userInput },
                 success: function (response) {
+
+                    // Remove the old data
+                    localStorage.removeItem('selectedHotels');
+                    
+                    // Add the new data
+                    localStorage.setItem('selectedHotels', JSON.stringify(response.suggestions));
+                    
 
                     var chatSuggestions = document.getElementById("chat-suggestions");
                     chatSuggestions.innerHTML = "";
 
-                    // var chatMessages = document.getElementById("chat-messages");
-                    // // chatMessages.innerHTML = "";
+                    var chatMessages = document.getElementById("chat-messages");
+                    // chatMessages.innerHTML = "";
 
-                    // var userMessage = document.createElement("div");
-                    // userMessage.className = "message sent ml-5";
-                    // userMessage.innerHTML = "<strong></strong> " + userInput;
-                    // chatMessages.appendChild(userMessage);
+                    var userMessage = document.createElement("div");
+                    userMessage.className = "message sent ml-5";
+                    userMessage.innerHTML = "<strong></strong> " + userInput;
+                    chatMessages.appendChild(userMessage);
 
                     var chatSuggestions = document.getElementById("chat-suggestions");
 
                     if (response.suggestions && response.suggestions.length > 0) {
                         response.suggestions.forEach(function (suggestion) {
-
-                            var placeName = suggestion['place_name'];
+                            var placeName = suggestion['Place Name'];
 
                             if (!selectedPlaces.has(placeName)) {
                                 var card = document.createElement("div");
                                 card.className = "card mt-2";
-                                card.setAttribute("onclick", "addSelectedPlace('" + placeName + "')");
+                                // card.setAttribute("onclick", "addSelectedPlace('" + suggestion['Hotel Name'] + "')");
 
                                 var cardImage = document.createElement("img");
                                 cardImage.className = "card-img-left img-fluid h-25";
@@ -178,13 +176,13 @@
                                 var cardBody = document.createElement("div");
                                 cardBody.className = "card-body";
 
-                                cardBody.innerHTML = "<h5 class='card-title'>" + placeName + "</h5>" +
+                                cardBody.innerHTML = "<h5 class='card-title'>" + suggestion['Hotel Name'] + "</h5>" +
                                     "<p class='card-text'>" +
-                                    "Category: " + suggestion['category'] + "<br>" +
-                                    "Description: " + suggestion['description'] + "<br>" +
-                                    "Location: " + suggestion['location'] + "<br>" +
-                                    "Entry Fee (BDT): " + suggestion['fee'] + "<br>" +
-                                    "Opening Hours: " + suggestion['opening_hour'] +
+                                    "Address: " + suggestion['Address'] + "<br>" +
+                                    "Phone Number: " + suggestion['Phone Number'] + "<br>" +
+                                    "Description: " + suggestion['Description'] + "<br>" +
+                                    "Facilities: " + suggestion['Facilities'] + "<br>" +
+                                    "Price Range (USD): " + suggestion['Min Price (USD)'] + '-' + suggestion['Max Price (USD)'] +
                                     "</p>";
 
                                 card.appendChild(cardBody);
@@ -203,31 +201,17 @@
         }
     }
 
-    function addSelectedPlace(placeName) {
-        var selectedCard = document.querySelector(".col-4.p-3.text-dark.rouneded");
-        var selectedList = selectedCard.querySelector("ul");
-
-        if (!selectedPlaces.has(placeName)) {
-            var listItem = document.createElement("li");
-            listItem.textContent = placeName;
-            selectedList.appendChild(listItem);
-
-            selectedPlaces.add(placeName);
-
-            saveSelectedPlacesToLocalStorage();
-
-            toggleNextButtonVisibility();
-        }
-    }
+    // function addSelectedPlace(placeName) {
+    //     selectedHotels.add(placeName);
+    //     saveSelectedPlacesToLocalStorage();
+    // }
 
     function toggleNextButtonVisibility() {
         var nextButton = document.querySelector(".col-4.p-3.text-dark.rouneded button");
         nextButton.style.display = selectedPlaces.size > 0 ? "block" : "none";
     }
 
-    document.getElementById('next-button').addEventListener('click', function(e) {
-        e.preventDefault();
-
+    function redirectTo(){
         var placeNames = JSON.parse(localStorage.getItem('selectedPlaces')) || []
 
         var subPlaceName = placeNames[placeNames.length - 1]
@@ -237,12 +221,10 @@
             return encodeURIComponent(place);
         }).join(',');
 
-        // var redirectUrl = "/hotels_preference_chatbox?placeNames=" + encodedPlaceNames;
-        var redirectUrl = "/hotels_preference_chatbox";
+        var redirectUrl = "/hotels?placeNames=" + encodedPlaceNames;
 
         window.location.href = redirectUrl;
-    });
-
+    }
 
 </script>
 {% endblock script %}

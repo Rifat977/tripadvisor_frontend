@@ -18,12 +18,17 @@ from django.apps import apps
 
 from math import radians, sin, cos, sqrt, atan2
 
+from sklearn.ensemble import RandomForestClassifier
+
+from sklearn.linear_model import LogisticRegression  # Import your desired model
+
 # import pandas as pd
 # from sklearn.feature_extraction.text import TfidfVectorizer
 # from sklearn.metrics.pairwise import cosine_similarity
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import pandas as pd
+import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import nltk
@@ -62,9 +67,7 @@ def hotels(request):
     place_names_param = request.GET.get('placeNames', '')
     place_names = place_names_param.split(',')
 
-    hotels_info = []
-
-
+    LatLon = []
 
     for place_name in place_names:
         place = get_object_or_404(Places, place_name=place_name)
@@ -72,29 +75,59 @@ def hotels(request):
         location = place.location
         location = location.split(",")
         location = location[len(location) - 1]
-        coordinates = get_coordinates(api_key=None, location=place.location)
+        coordinates = get_coordinates(api_key=None, location=location)
+        LatLon.append(coordinates)
 
-        if coordinates:
-            radius = 2000
-            hotels = search_hotels(api_key=None, coordinates=coordinates, radius=radius)
+    return render(request, 'hotels.html', {'lat': coordinates[0], 'lon': coordinates[1], 'LatLon': LatLon})
 
-            for hotel in hotels:
-                lat = hotel.get('lat', 'N/A')
-                lon = hotel.get('lon', 'N/A')
-                tags = hotel.get('tags', {})
-                
-                if 'name' in tags:
-                    hotel_info = {'latitude': lat, 'longitude': lon, 'tags': tags, 'place_name': place_name, 'location': place.location, 'random_number': random.randint(0, 99)}
-                    
-                    distance = calculate_distance(coordinates[0], coordinates[1], float(lat), float(lon))
-                    hotel_info['distance'] = round(distance, 2)
 
-                    hotels_info.append(hotel_info)
 
-    sorted_hotels_info = sorted(hotels_info, key=lambda x: x['distance'])
+# Load and preprocess data
+df = pd.read_csv('hotels.csv')
 
-    return render(request, 'hotels.html', {'hotels': sorted_hotels_info})
-    
+features = df[['Description', 'Facilities', 'Min Price (USD)', 'Max Price (USD)']]
+labels = df['Hotel Name']
+
+vectorizer = TfidfVectorizer(stop_words='english')
+X = vectorizer.fit_transform(features.apply(lambda x: ' '.join(map(str, x)), axis=1))
+
+df['Amenities'] = df.apply(lambda x: ', '.join(x['Facilities']), axis=1) 
+
+# Use Logistic Regression's probability outputs
+model = LogisticRegression()
+model.fit(X, labels)
+
+@csrf_exempt
+def hotels_preference_chatbox(request):
+
+    if request.method == "POST":
+
+        user_message = request.POST.get('userInput', '')
+        user_input_vector = vectorizer.transform([user_message])
+        
+        # Get probability outputs
+        probabilities = model.predict_proba(user_input_vector)
+        
+        # Sort by highest probability
+        sorted_indexes = np.argsort(-probabilities, axis=1)[:, :3]
+        suggested_hotels = []
+        suggested_info = []
+
+        
+        for index in sorted_indexes[0]:
+            hotel_name = model.classes_[index]
+            hotel_info = df[df['Hotel Name'] == hotel_name].to_dict('records')[0]
+            hotel_info['random'] = random.randint(0,99)
+            suggested_hotels.append(hotel_name)
+            suggested_info.append(hotel_info)
+
+        print(suggested_info)
+            
+        # Return top k suggestions
+        return JsonResponse({'suggestions': suggested_info}) 
+
+    return render(request, 'hotel_preference_chat.html')
+
 
 def info(request):
     return render(request, 'info.html')

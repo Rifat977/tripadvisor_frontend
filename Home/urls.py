@@ -18,6 +18,7 @@ urlpatterns = [
    path('find_place_chatbox', find_place_chatbox, name="find_place_chatbox"),
    path('sub_place_chatbox', sub_place_chatbox, name="sub_place_chatbox"),
    path('hotels', hotels, name="hotels"),
+   path('hotels_preference_chatbox', hotels_preference_chatbox, name="hotels_preference_chatbox"),
 
 
    path('info', info, name="info"),
