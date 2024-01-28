@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>TripAdvisor PDF</title>
+</head>
+<body>
+    <h1>Selected Places PDF</h1>
+    <h2>Selected Places:</h2>
+    <ul>
+        {% for place in selected_places %}
+            <li>{{ place }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Hotels Data:</h2>
+    <ul>
+        {% for hotel in hotels_data %}
+            <li>Name: {{ hotel.name }}, Location: {{ hotel.location }}, Distance: {{ hotel.distance }} km</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

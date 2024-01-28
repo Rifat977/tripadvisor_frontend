@@ -20,6 +20,8 @@ urlpatterns = [
    path('hotels', hotels, name="hotels"),
    path('hotels_preference_chatbox', hotels_preference_chatbox, name="hotels_preference_chatbox"),
 
+   path('submit_places', submit_places, name="submit_places"),
+
 
    path('info', info, name="info"),
    

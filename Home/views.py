@@ -1,7 +1,7 @@
 from datetime import datetime
 import requests
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from authentication.models import User
@@ -10,23 +10,22 @@ from .models import *
 
 from .accom import *
 
+from xhtml2pdf import pisa
+from reportlab.pdfgen import canvas
+from django.template.loader import get_template
+import tempfile
+from django.template.loader import render_to_string
+
 import json
 
 from django.shortcuts import render, get_object_or_404
-
 from django.apps import apps
 
 from math import radians, sin, cos, sqrt, atan2
 
 from sklearn.ensemble import RandomForestClassifier
-
 from sklearn.linear_model import LogisticRegression  # Import your desired model
 
-# import pandas as pd
-# from sklearn.feature_extraction.text import TfidfVectorizer
-# from sklearn.metrics.pairwise import cosine_similarity
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -383,3 +382,48 @@ def save_main_csv(request):
         objj = Places.objects.create(place_name=place_name,category=category,description=description,location=location,fee=fee,opening_hour=opening_hour)
         objj.save()
     return JsonResponse({'hello':'world'})
+
+
+def generate_pdf(selected_places, hotels_data):
+    template_path = 'template.html'
+    context = {'selected_places': selected_places, 'hotels_data': hotels_data}
+    template = get_template(template_path)
+    html = template.render(context)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="selected_places.pdf"'
+
+    temp_file = tempfile.NamedTemporaryFile(delete=False)
+
+    # Generate the PDF content using reportlab or xhtml2pdf (as you prefer)
+    pdf_content = render_to_string('template.html', {'selected_places': selected_places, 'hotels_data': hotels_data})
+    
+    # Use reportlab to create a PDF
+    p = canvas.Canvas(temp_file.name)
+    p.drawString(100, 800, pdf_content)
+    p.save()
+
+    # Close the temporary file
+    temp_file.close()
+
+    # Return the file path of the generated PDF
+    return temp_file.name
+
+@csrf_exempt
+def submit_places(request):
+    if request.method == 'POST':
+        selected_places = request.POST.get('selected_places')
+        hotels_data = json.loads(request.POST.get('hotels_data'))
+
+        if not selected_places or not hotels_data:
+            return HttpResponseBadRequest()
+
+        pdf_file_path = generate_pdf(selected_places, hotels_data)
+        with open(pdf_file_path, 'rb') as pdf_file:
+            response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename=selected_places.pdf'
+            return response
+
+    else:
+        return JsonResponse({'error': 'Invalid form data'}, status=400)
+        
