@@ -441,15 +441,22 @@
                 'csrfmiddlewaretoken': '{{ csrf_token }}'
             },
             success: function(response) {
-                if (response.success && response.pdf_file_path) {
-                    // Initiate the download
-                    var downloadLink = document.createElement('a');
-                    downloadLink.href = response.pdf_file_path;
-                    downloadLink.download = 'selected_places.pdf';
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
+                console.log(response)
+                var byteCharacters = atob(response.pdf_content);
+                var byteNumbers = new Array(byteCharacters.length);
+                for (var i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
                 }
+                var byteArray = new Uint8Array(byteNumbers);
+                var blob = new Blob([byteArray], { type: 'application/pdf' });
+
+                // Create a download link and trigger the download
+                var downloadLink = document.createElement('a');
+                downloadLink.href = window.URL.createObjectURL(blob);
+                downloadLink.download = 'selected_places.pdf';
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
                 console.log('Places submitted successfully', response);
             },
             error: function(error) {
