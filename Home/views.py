@@ -236,7 +236,7 @@ def find_place_chatbox(request):
         print(user_message)
 
         # Combine 'Category' and 'Description'
-        df['Combined Features'] = df['Category'] + ' ' + df['Description']
+        df['Combined Features'] = df['Place Name'] + ' ' + df['Category'] + ' ' + df['Description']
 
         # Tokenization and Lemmatization
         stop_words = set(stopwords.words('english'))

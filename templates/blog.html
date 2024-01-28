@@ -23,7 +23,6 @@
             <div class="profile-details">
                 <h4 class="font-weight-bold" style="font-size: 40px">{{user.first_name}} {{user.last_name}}</h4>
                 <p>{{ user.email }}</p>
-                <p>123 Street, City</p>
             </div>
         </div>
     </div>
@@ -44,15 +43,15 @@
         <div class="col-lg-4 col-md-6">
             <div class="p-2 m-3 separate_colunm">
                 <div class="card shadow border rounded p-3 card_info">
+                    <h3 class="card-title">{{blog.title}}</h3>
+                    <p>{{blog.description|slice:":200"}}</p>
                     {% if blog.imeage %}
-                    <img src="{{blog.imeage.url}}" class="card-img-top d-block mx-auto w-25" alt="card-image">
+                    <img src="{{blog.imeage.url}}" class=" d-block mx-auto h-100 w-100" alt="card-image">
                     
                     {% else %}
                     <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="card-img-top d-block mx-auto w-25" alt="card-image">
                     {% endif %}
                     
-                    <h3 class="card-title  mt-4 pt-5 mt-5">{{blog.title}}</h3>
-                    <p>{{blog.description|slice:":200"}}</p>
                 </div>
             </div>
         </div>
