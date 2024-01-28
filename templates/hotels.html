@@ -283,85 +283,164 @@
             // Calculate distance
             var distance = haversineDistance(hotel.latitude, hotel.longitude, lat, lon);
             distance = distance.toFixed(2);
+
+
+            // Add hotel and distance to an array
+            var hotelWithDistance = { hotel: hotel, distance: distance };
+
+
+            // Construct the HTML content for the hotel
+            hotelDiv.innerHTML = `
+            <div class="col-md-4">
+                <!-- Add your hotel image and gallery here -->
+                <div class="image-top">
+                    <!-- Add your hotel image here -->
+                    <img src="{%static './photos/4.jpg'%}" class="h-auto w-100 rounded" alt="main img">
+                </div>
+                <!-- Add other gallery images here -->
+                <div class="row">
+                    <!-- Add other gallery images here -->
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <!-- Add hotel name, rating, location, and other details here -->
+                <div class="middle-top">
+                    <h4 class="font-weight-bold">${hotel.tags['name']}</h4>
+                </div>
+                <!-- Add rating and location details here -->
+                <div class="row no-gutters">
+                    <div class="col-md-3">
+                        <!-- Add hotel rating here -->
+                        <div class="rating">
+                            ${Array.from({ length: 5 }, () => '<i class="fa-regular fa-star rating-icon"></i>').join('')}
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <!-- Add hotel location and map link here -->
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>${hotel.location} -</span>
+                        <span><a href="#">View on map</a></span>
+                    </div>
+                </div>
+                <!-- Add space details, review, and distance here -->
+                <div class="space mt-2">
+                    ${hotel.Facilities}
+                </div>
+                <!-- Add hotel review and distance details here -->
+                <p class="middle-text mt-3 h6">"${hotel.Description}"</p>
+                    <p class="middle-text-last mt-3 text-center">
+                        Distance cover for you sight ${distance} km
+                    </p>
+            </div>
+            <div class="col-md-3 text-right">
+                <!-- Add hotel category, reviews, and check availability button here -->
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <h6>HOTEL</h6>
+                        <p>${hotel.random} Reviews</p>
+                    </div>
+                </div>
+                <!-- Add check mark icon here -->
+                <div class="">
+                    <i class="fa-regular fa-3x fa-circle-check"></i>
+                </div>
+                <!-- Add average per night and check availability button here -->
+                <div class="right-content-bottom mt-2">
+                    <h5 class="font-weight-bold">Average Per Night</h5>
+                    <h5 class="font-weight-bold">${hotel['Min Price (USD)']} - ${hotel['Max Price (USD)']} USD.</h5>
+                    <button class="btn btn-primary rounded text-light px-2">Check Availability</button>
+                </div>
+            </div>
+            `;
+
+
         }else{
             // Calculate distance
             var distance = haversineDistance(hotel.Latitude, hotel.Longitude, lat, lon);
             distance = distance.toFixed(2);
-        }
-
-        // Add hotel and distance to an array
-        var hotelWithDistance = { hotel: hotel, distance: distance };
 
 
-        // Construct the HTML content for the hotel
-        hotelDiv.innerHTML = `
-        <div class="col-md-4">
-            <!-- Add your hotel image and gallery here -->
-            <div class="image-top">
-                <!-- Add your hotel image here -->
-                <img src="{%static './photos/4.jpg'%}" class="h-auto w-100 rounded" alt="main img">
-            </div>
-            <!-- Add other gallery images here -->
-            <div class="row">
+            // Add hotel and distance to an array
+            var hotelWithDistance = { hotel: hotel, distance: distance };
+
+
+            // Construct the HTML content for the hotel
+            hotelDiv.innerHTML = `
+            <div class="col-md-4">
+                <!-- Add your hotel image and gallery here -->
+                <div class="image-top">
+                    <!-- Add your hotel image here -->
+                    <img src="{%static './photos/4.jpg'%}" class="h-auto w-100 rounded" alt="main img">
+                </div>
                 <!-- Add other gallery images here -->
-                <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
-                <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
-                <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
-                <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
-                <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
-                <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                <div class="row">
+                    <!-- Add other gallery images here -->
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                    <div class="col-4 mt-2"><img src="{%static './photos/4.jpg'%}" class="img-fluid rounded" alt="img"></div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-5">
-            <!-- Add hotel name, rating, location, and other details here -->
-            <div class="middle-top">
-                <h4 class="font-weight-bold">${hotel['Hotel Name']}</h4>
-            </div>
-            <!-- Add rating and location details here -->
-            <div class="row no-gutters">
-                <div class="col-md-3">
-                    <!-- Add hotel rating here -->
-                    <div class="rating">
-                        ${Array.from({ length: 5 }, () => '<i class="fa-regular fa-star rating-icon"></i>').join('')}
+            <div class="col-md-5">
+                <!-- Add hotel name, rating, location, and other details here -->
+                <div class="middle-top">
+                    <h4 class="font-weight-bold">${hotel['Hotel Name']}</h4>
+                </div>
+                <!-- Add rating and location details here -->
+                <div class="row no-gutters">
+                    <div class="col-md-3">
+                        <!-- Add hotel rating here -->
+                        <div class="rating">
+                            ${Array.from({ length: 5 }, () => '<i class="fa-regular fa-star rating-icon"></i>').join('')}
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <!-- Add hotel location and map link here -->
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>${hotel.Address} -</span>
+                        <span><a href="#">View on map</a></span>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <!-- Add hotel location and map link here -->
-                    <i class="fa-solid fa-location-dot"></i>
-                    <span>${hotel.Address} -</span>
-                    <span><a href="#">View on map</a></span>
+                <!-- Add space details, review, and distance here -->
+                <div class="space mt-2">
+                    ${hotel.Facilities}
+                </div>
+                <!-- Add hotel review and distance details here -->
+                <p class="middle-text mt-3 h6">"${hotel.Description}"</p>
+                    <p class="middle-text-last mt-3 text-center">
+                        Distance cover for you sight ${distance} km
+                    </p>
+            </div>
+            <div class="col-md-3 text-right">
+                <!-- Add hotel category, reviews, and check availability button here -->
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <h6>HOTEL</h6>
+                        <p>${hotel.random} Reviews</p>
+                    </div>
+                </div>
+                <!-- Add check mark icon here -->
+                <div class="">
+                    <i class="fa-regular fa-3x fa-circle-check"></i>
+                </div>
+                <!-- Add average per night and check availability button here -->
+                <div class="right-content-bottom mt-2">
+                    <h5 class="font-weight-bold">Average Per Night</h5>
+                    <h5 class="font-weight-bold">${hotel['Min Price (USD)']} - ${hotel['Max Price (USD)']} USD.</h5>
+                    <button class="btn btn-primary rounded text-light px-2">Check Availability</button>
                 </div>
             </div>
-            <!-- Add space details, review, and distance here -->
-            <div class="space mt-2">
-                ${hotel.Facilities}
-            </div>
-            <!-- Add hotel review and distance details here -->
-            <p class="middle-text mt-3 h6">"${hotel.Description}"</p>
-                <p class="middle-text-last mt-3 text-center">
-                    Distance cover for you sight ${distance} km
-                </p>
-        </div>
-        <div class="col-md-3 text-right">
-            <!-- Add hotel category, reviews, and check availability button here -->
-            <div class="row no-gutters">
-                <div class="col-12">
-                    <h6>HOTEL</h6>
-                    <p>${hotel.random} Reviews</p>
-                </div>
-            </div>
-            <!-- Add check mark icon here -->
-            <div class="">
-                <i class="fa-regular fa-3x fa-circle-check"></i>
-            </div>
-            <!-- Add average per night and check availability button here -->
-            <div class="right-content-bottom mt-2">
-                <h5 class="font-weight-bold">Average Per Night</h5>
-                <h5 class="font-weight-bold">${hotel['Min Price (USD)']} - ${hotel['Max Price (USD)']} USD.</h5>
-                <button class="btn btn-primary rounded text-light px-2">Check Availability</button>
-            </div>
-        </div>
-        `;
+            `;
+
+        }
 
         // document.getElementById('hotelsContainer').appendChild(hotelDiv);
         document.getElementById('hotelsContainer').appendChild(hotelDiv);

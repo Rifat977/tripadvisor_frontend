@@ -143,7 +143,7 @@ def hotels_preference_chatbox(request):
             hotels_info = []
             
             if coordinates:
-                radius = 10000
+                radius = 5000
                 hotels = search_hotels(api_key=None, coordinates=coordinates, radius=radius)
 
                 for hotel in hotels:
@@ -152,21 +152,12 @@ def hotels_preference_chatbox(request):
                     tags = hotel.get('tags', {})
 
                     if 'name' in tags:
-                        hotel_info = {'latitude': lat, 'longitude': lon, 'tags': tags}
-                        for hotel in hotels:
-                            lat = hotel.get('lat', 'N/A')
-                            lon = hotel.get('lon', 'N/A')
-                            tags = hotel.get('tags', {})
+                        hotel_info = {'latitude': lat, 'longitude': lon, 'tags': tags, 'place_name': selectedPlaces[0], 'location': place.location, 'random_number': random.randint(0, 99)}
 
-                            distance = calculate_distance(coordinates[0], coordinates[1], float(lat), float(lon))
-                            hotel_info['distance'] = round(distance, 2)
-                            if 'name' in tags:
-                                hotel_info = {'latitude': lat, 'longitude': lon, 'tags': tags, 'place_name': selectedPlaces[0], 'location': place.location, 'random_number': random.randint(0, 99)}
+                        distance = calculate_distance(coordinates[0], coordinates[1], float(lat), float(lon))
+                        hotel_info['distance'] = round(distance, 2)
 
-                                distance = calculate_distance(coordinates[0], coordinates[1], float(lat), float(lon))
-                                hotel_info['distance'] = round(distance, 2)
-
-                                hotels_info.append(hotel_info)
+                        hotels_info.append(hotel_info)
 
             sorted_hotels_info = sorted(hotels_info, key=lambda x: x['distance'])
 

@@ -26,8 +26,8 @@ def search_hotels(api_key, coordinates, radius=1000, search_type='tourism', sear
     response = requests.post(base_url, data=query)
     data = response.json()
 
-    print("\n===========\n")
-    print(data)
+    # print("\n===========\n")
+    # print(data)
 
     if 'elements' in data:
         return data['elements']
