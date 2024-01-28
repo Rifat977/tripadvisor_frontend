@@ -135,12 +135,21 @@
       <div class="col-lg-4 col-md-6">
         <div class="p-2 m-3 separate_colunm">
           <div class="card shadow border rounded p-3 card_info">
+            {% if blog.imeage %}
             <img
-              src="{%static './photos/profile.png'%}"
-              class="card-img-top d-block mx-auto w-25"
+              src="{{blog.imeage.url}}"
+              class="card-img-top d-block mx-auto h-50 w-25 rouneded-circle" style="border-radius: 50%;"
               alt="card-image"
             />
-            <h3 class="card-title mt-4 pt-5">{{blog.title}}</h3>
+
+            {% else %}
+            <img
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              class="card-img-top  d-block rouneded-circle mx-auto w-25"
+              alt="card-image" 
+            />
+            {% endif %}
+            <h3 class="card-title mt-5 pt-5">{{blog.title}}</h3>
             <p>{{blog.description|slice:":200"}}</p>
           </div>
         </div>

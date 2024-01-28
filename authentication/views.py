@@ -127,3 +127,62 @@ def logout(request):
 
     auth.logout(request)
     return redirect('/')
+
+
+def forgot_password(request):
+
+    if request.method == 'GET':
+        return render(request,'enter_email_for_forget_password.html')
+    
+    if request.method == 'POST':
+
+        email = request.POST['email']
+
+        try:
+            user = User.objects.get(email=email)
+        except(ObjectDoesNotExist):
+            return render(request,'msg.html',context={'msg':'User Not Exist.'})
+        
+        user.password_reset_token = random.randint(1000,9999)
+        user.save(update_fields=["password_reset_token"])
+
+        send_mail(
+            "For Reset Password ",
+            f"http://localhost:8000/auth/reset_password/{user.password_reset_token}/{user.id}",
+            "shossain201214@bscse.uiu.ac.bd", # Email
+            [user.email],
+            fail_silently= False,
+            )
+
+        return render(request,'msg.html',context={'msg':'Password Reset URL Send to your Email'})
+    
+
+
+def reset_password(request,pk,uid):
+
+    if request.method == 'GET':
+        try:
+            user = User.objects.get(id=uid)
+        except(ObjectDoesNotExist):
+            return render(request,'msg.html',context={'msg':'User Not Exist.'})
+        
+        if user.password_reset_token == pk:
+
+            auth.login(request,user)
+
+            return render(request,'forget_pass.html')
+        
+def change_password(request):
+        
+    if request.method == 'POST':
+
+        new_pass = request.POST['password']
+
+        user = request.user
+        user.set_password(new_pass)
+        user.save()
+
+        return redirect('/auth/login')
+        
+
+  

@@ -4,6 +4,7 @@
 __pycache__/
 *.pyc
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 static/
@@ -11,5 +12,13 @@ static/
 # Ignore logs
 *.log
 
+=======
+
+# Ignore logs
+*.log
+
+static/
+
+>>>>>>> origin/update28
 # Ignore environment files
 .env

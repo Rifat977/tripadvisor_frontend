@@ -51,7 +51,7 @@ class User(AbstractUser):
     address = models.CharField(max_length = 255, null=True, blank=True)
     ratting = models.FloatField(default=0)
     profile = models.ImageField(upload_to='ProfilePhoto/',null=True,blank=True)
-    password_reset_token = models.CharField(max_length=50, null=True, blank=True)
+    password_reset_token = models.CharField(max_length=255, null=True, blank=True)
     password_reset_OTP = models.CharField(max_length=50, null=True, blank=True)
 
 
