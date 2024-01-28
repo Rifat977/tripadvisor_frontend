@@ -143,7 +143,7 @@ def hotels_preference_chatbox(request):
             hotels_info = []
             
             if coordinates:
-                radius = 5000
+                radius = 50000
                 hotels = search_hotels(api_key=None, coordinates=coordinates, radius=radius)
 
                 for hotel in hotels:
@@ -160,8 +160,9 @@ def hotels_preference_chatbox(request):
                         hotels_info.append(hotel_info)
 
             sorted_hotels_info = sorted(hotels_info, key=lambda x: x['distance'])
+            top_3_hotels = sorted_hotels_info[:3]  # Take the top 3 hotels
 
-            return JsonResponse({'suggestions2': sorted_hotels_info, 'location': location})
+            return JsonResponse({'suggestions2': top_3_hotels, 'location': location})
 
 
     return render(request, 'hotel_preference_chat.html')
