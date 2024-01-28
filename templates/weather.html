@@ -1,0 +1,83 @@
+{% extends "base.html" %} {% load static %} {% block link %}
+<style></style>
+{% endblock link %} {% block content %}
+<div class="container mt-5">
+  <div class="card mb-5">
+    <div class="card-header">
+      <h5>Weather Overview</h5>
+    </div>
+    <div class="card-body">
+      <form id="dateForm">
+        <div class="form-group">
+          <label for="selected-date">Select Date:</label>
+          <input type="date" id="selected-date" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="city-name">City Name</label>
+          <input
+            type="text"
+            id="selected-city"
+            class="form-control"
+            placeholder="Dhaka"
+          />
+        </div>
+        <button type="button" class="btn btn-primary" onclick="getWeather()">
+          Get Weather
+        </button>
+      </form>
+
+      <div id="weather-info" class="mt-4"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function getWeather() {
+    var selectedDate = document.getElementById("selected-date").value;
+    var selectedCity = document.getElementById("selected-city").value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        displayWeather(response.weather_data);
+      }
+    };
+
+    var url =
+      "/get_weather/?selected_date=" +
+      selectedDate +
+      "&selected_city=" +
+      selectedCity;
+    xhr.open("GET", url, true);
+    xhr.send();
+  }
+
+  function displayWeather(weatherData) {
+    var weatherInfoDiv = document.getElementById("weather-info");
+    weatherInfoDiv.innerHTML = "";
+
+    console.log(weatherData);
+
+    var locationElement = document.createElement("p");
+    locationElement.textContent =
+      "Location: " +
+      weatherData.location.name +
+      ", " +
+      weatherData.location.country;
+
+    var temperatureElement = document.createElement("p");
+    temperatureElement.textContent =
+      "Max Temperature: " + weatherData.forecast.forecastday[0].day.maxtemp_c;
+
+    var minTemperatureElement = document.createElement("p");
+    minTemperatureElement.textContent =
+      "Min Temperature: " + weatherData.forecast.forecastday[0].day.mintemp_c;
+
+    weatherInfoDiv.appendChild(locationElement);
+    weatherInfoDiv.appendChild(temperatureElement);
+    weatherInfoDiv.appendChild(minTemperatureElement);
+  }
+</script>
+
+{% endblock content %}

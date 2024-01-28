@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% load static %} {% block link %}
+<link rel="stylesheet" href="{%static './css/login.css'%}" />
+{% endblock link %} {% block content %}
+
+<div class="container login-section mt-4">
+  <div class="row">
+    <div class="col-md-7 col-12">
+      <div class="shadow p-4 text-center rounded">
+        <h3 class="font-weight-bold">{{msg}}</h3>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="layout">
+        <img src="{% static './photos/login.png' %}" class="h-75" alt="" />
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
