@@ -122,6 +122,7 @@ def hotels_preference_chatbox(request):
             sorted_indexes = np.argsort(-probabilities, axis=1)[:, :3]
             suggested_hotels = []
             suggested_info = []
+            hotel_locations = []
 
             
             for index in sorted_indexes[0]:
@@ -130,9 +131,12 @@ def hotels_preference_chatbox(request):
                 hotel_info['random'] = random.randint(0,99)
                 suggested_hotels.append(hotel_name)
                 suggested_info.append(hotel_info)
+                hotel_locations.append(hotel_info['Address'])
+
+            print(hotel_locations)
                 
             # Return top k suggestions
-            return JsonResponse({'suggestions': suggested_info}) 
+            return JsonResponse({'suggestions': suggested_info, 'hotel_location':hotel_locations}) 
         else:
             place = get_object_or_404(Places, place_name=selectedPlaces[0])
             location = place.location

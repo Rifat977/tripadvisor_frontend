@@ -13,7 +13,7 @@
 
 <div class="container-fluid">
     <div class="heading">
-        <h2 class="mt-5">Hotels in {% for hotel in hotel_locaiton %} {{hotel}}. {% endfor %}</h2>
+        <h2 class="mt-5">Hotels in <span id="hotel_location"></span></h2>
     </div>
 </div>
 
@@ -21,7 +21,7 @@
 <div class="container-fluid mb-5">
     <div class="row mt-5">
         <div class="col-lg-2 col-md-2">
-            <div class="left-comlumn p-4 shadow border rounded">
+            <!-- <div class="left-comlumn p-4 shadow border rounded">
                 <p class="">Star Rating</p>
                 <form action="/" class="">
                     <input type="checkbox" id="#" name="5 star" value="5 star">
@@ -46,7 +46,7 @@
                     <input type="checkbox" id="#" name="Pleasant 6+" value="Pleasant 6+">
                     <label for="Pleasant 6+">Pleasant 6+</label> <br>
                 </form>
-            </div>
+            </div> -->
         </div>
         <div class="col-lg-7 col-md-7 ">
             <div class="container">
@@ -138,7 +138,7 @@
                 </div>
                 
                 
-                <div class="col-lg-12 mt-5 p-2 bottom-right">
+                <!-- <div class="col-lg-12 mt-5 p-2 bottom-right">
                     <h4 class="">Plan</p>
                         <div>
                             <h5>Day 1:Arrival in Kuakata</h5>
@@ -186,7 +186,7 @@
                                     activities.</li>
                             </ul>
                         </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -449,6 +449,18 @@
     }
 
     var hotelsInformation = JSON.parse(localStorage.getItem('selectedHotels'));
+    var hotelLocationElement = document.getElementById('hotel_location');
+
+    if (hotelsInformation && hotelLocationElement) {
+        hotelLocationElement.textContent = hotelsInformation[0].location;
+    }
+
+
+    if(hotelsInformation[0].Address){
+        hotelLocationElement.textContent = hotelsInformation[0].Address;
+    }
+
+
 
     // Check if hotelsInformation is not null or undefined
     if (hotelsInformation) {
