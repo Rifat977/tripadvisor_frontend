@@ -21,8 +21,8 @@
             {% endif %}
             
             <div class="profile-details">
-                <h4 class="font-weight-bold">Nazmul Hoda</h4>
-                <p>example@email.com</p>
+                <h4 class="font-weight-bold">{{user.first_name}} {{user.last_name}}</h4>
+                <p>{{ user.email }}</p>
                 <p>123 Street, City</p>
             </div>
             <div class="profile-rating-parent px-2">
@@ -58,7 +58,7 @@
                     <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="card-img-top d-block mx-auto w-25" alt="card-image">
                     {% endif %}
                     
-                    <h3 class="card-title  mt-4 pt-5">{{blog.title}}</h3>
+                    <h3 class="card-title  mt-4 pt-5 mt-5">{{blog.title}}</h3>
                     <p>{{blog.description|slice:":200"}}</p>
                 </div>
             </div>

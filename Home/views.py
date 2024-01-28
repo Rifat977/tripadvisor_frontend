@@ -70,7 +70,7 @@ def hotels(request):
     LatLon = []
 
     for place_name in place_names:
-        place = get_object_or_404(Places, place_name=place_name)
+        place = get_object_or_404(Places, place_name=place_names[0])
 
         location = place.location
         location = location.split(",")
@@ -103,28 +103,75 @@ def hotels_preference_chatbox(request):
     if request.method == "POST":
 
         user_message = request.POST.get('userInput', '')
+        selectedPlaces = request.POST.getlist('selectedPlaces[]', '')  # Use getlist to retrieve multiple values
+        
         user_input_vector = vectorizer.transform([user_message])
-        
-        # Get probability outputs
-        probabilities = model.predict_proba(user_input_vector)
-        
-        # Sort by highest probability
-        sorted_indexes = np.argsort(-probabilities, axis=1)[:, :3]
-        suggested_hotels = []
-        suggested_info = []
 
-        
-        for index in sorted_indexes[0]:
-            hotel_name = model.classes_[index]
-            hotel_info = df[df['Hotel Name'] == hotel_name].to_dict('records')[0]
-            hotel_info['random'] = random.randint(0,99)
-            suggested_hotels.append(hotel_name)
-            suggested_info.append(hotel_info)
+        has_dataset = False
+        for selectedPlace in selectedPlaces:
+            place = get_object_or_404(Places, place_name=selectedPlace)
+            if "Patenga" in place.location or "Agrabad" in place.location:
+                has_dataset = True
+                break
 
-        print(suggested_info)
+        if has_dataset:
+            # Get probability outputs
+            probabilities = model.predict_proba(user_input_vector)
             
-        # Return top k suggestions
-        return JsonResponse({'suggestions': suggested_info}) 
+            # Sort by highest probability
+            sorted_indexes = np.argsort(-probabilities, axis=1)[:, :3]
+            suggested_hotels = []
+            suggested_info = []
+
+            
+            for index in sorted_indexes[0]:
+                hotel_name = model.classes_[index]
+                hotel_info = df[df['Hotel Name'] == hotel_name].to_dict('records')[0]
+                hotel_info['random'] = random.randint(0,99)
+                suggested_hotels.append(hotel_name)
+                suggested_info.append(hotel_info)
+                
+            # Return top k suggestions
+            return JsonResponse({'suggestions': suggested_info}) 
+        else:
+            place = get_object_or_404(Places, place_name=selectedPlaces[0])
+            location = place.location
+            location = location.split(",")
+            location = location[len(location) - 1]
+            coordinates = get_coordinates(api_key=None, location=location)
+
+            hotels_info = []
+            
+            if coordinates:
+                radius = 10000
+                hotels = search_hotels(api_key=None, coordinates=coordinates, radius=radius)
+
+                for hotel in hotels:
+                    lat = hotel.get('lat', 'N/A')
+                    lon = hotel.get('lon', 'N/A')
+                    tags = hotel.get('tags', {})
+
+                    if 'name' in tags:
+                        hotel_info = {'latitude': lat, 'longitude': lon, 'tags': tags}
+                        for hotel in hotels:
+                            lat = hotel.get('lat', 'N/A')
+                            lon = hotel.get('lon', 'N/A')
+                            tags = hotel.get('tags', {})
+
+                            distance = calculate_distance(coordinates[0], coordinates[1], float(lat), float(lon))
+                            hotel_info['distance'] = round(distance, 2)
+                            if 'name' in tags:
+                                hotel_info = {'latitude': lat, 'longitude': lon, 'tags': tags, 'place_name': selectedPlaces[0], 'location': place.location, 'random_number': random.randint(0, 99)}
+
+                                distance = calculate_distance(coordinates[0], coordinates[1], float(lat), float(lon))
+                                hotel_info['distance'] = round(distance, 2)
+
+                                hotels_info.append(hotel_info)
+
+            sorted_hotels_info = sorted(hotels_info, key=lambda x: x['distance'])
+
+            return JsonResponse({'suggestions2': sorted_hotels_info, 'location': location})
+
 
     return render(request, 'hotel_preference_chat.html')
 
@@ -216,7 +263,7 @@ def find_place_chatbox(request):
         cosine_similarities = cosine_similarity(user_message_vector, places_vectors).flatten()
 
         # Get the index of the top match
-        top_match_indices = cosine_similarities.argsort()[::-1][:5]
+        top_match_indices = cosine_similarities.argsort()[::-1][:3]
     
         suggestions = []
         for index in top_match_indices:

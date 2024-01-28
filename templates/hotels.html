@@ -276,9 +276,18 @@
         var hotelDiv = document.createElement('div');
         hotelDiv.className = 'row mb-4 shadow border rounded p-3 placeCard';
 
-        // Calculate distance
-        var distance = haversineDistance(hotel.Latitude, hotel.Longitude, {{lat}}, {{lon}});
-        distance = distance.toFixed(2);
+        var lat = {{lat}}
+        var lon = {{lon}}
+
+        if(hotel.latitude && hotel.longitude){
+            // Calculate distance
+            var distance = haversineDistance(hotel.latitude, hotel.longitude, lat, lon);
+            distance = distance.toFixed(2);
+        }else{
+            // Calculate distance
+            var distance = haversineDistance(hotel.Latitude, hotel.Longitude, lat, lon);
+            distance = distance.toFixed(2);
+        }
 
         // Add hotel and distance to an array
         var hotelWithDistance = { hotel: hotel, distance: distance };

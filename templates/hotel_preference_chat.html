@@ -136,66 +136,120 @@
             $.ajax({
                 url: "/hotels_preference_chatbox",
                 method: "POST",
-                data: { userInput: userInput },
+                data: { userInput: userInput, selectedPlaces: Array.from(selectedPlaces) },
                 success: function (response) {
 
-                    // Remove the old data
-                    localStorage.removeItem('selectedHotels');
-                    
-                    // Add the new data
-                    localStorage.setItem('selectedHotels', JSON.stringify(response.suggestions));
-                    
+                    if (response.suggestions2) {
+                        // Remove the old data
+                        localStorage.removeItem('selectedHotels');
+                        
+                        // Add the new data
+                        localStorage.setItem('selectedHotels', JSON.stringify(response.suggestions2));
+                        
 
-                    var chatSuggestions = document.getElementById("chat-suggestions");
-                    chatSuggestions.innerHTML = "";
+                        var chatSuggestions = document.getElementById("chat-suggestions");
+                        chatSuggestions.innerHTML = "";
 
-                    var chatMessages = document.getElementById("chat-messages");
-                    // chatMessages.innerHTML = "";
+                        var chatMessages = document.getElementById("chat-messages");
+                        // chatMessages.innerHTML = "";
 
-                    var userMessage = document.createElement("div");
-                    userMessage.className = "message sent ml-5";
-                    userMessage.innerHTML = "<strong></strong> " + userInput;
-                    chatMessages.appendChild(userMessage);
+                        var userMessage = document.createElement("div");
+                        userMessage.className = "message sent ml-5";
+                        userMessage.innerHTML = "<strong></strong> " + userInput;
+                        chatMessages.appendChild(userMessage);
 
-                    var chatSuggestions = document.getElementById("chat-suggestions");
+                        var chatSuggestions = document.getElementById("chat-suggestions");
 
-                    if (response.suggestions && response.suggestions.length > 0) {
-                        response.suggestions.forEach(function (suggestion) {
-                            var placeName = suggestion['Place Name'];
+                        if (response.suggestions2 && response.suggestions2.length > 0) {
+                            response.suggestions2.forEach(function (suggestion) {
+                                var placeName = suggestion['place_name'];
 
-                            if (!selectedPlaces.has(placeName)) {
-                                var card = document.createElement("div");
-                                card.className = "card mt-2";
-                                // card.setAttribute("onclick", "addSelectedPlace('" + suggestion['Hotel Name'] + "')");
+                                if (placeName) {
+                                    var card = document.createElement("div");
+                                    card.className = "card mt-2";
+                                    // card.setAttribute("onclick", "addSelectedPlace('" + suggestion['Hotel Name'] + "')");
 
-                                var cardImage = document.createElement("img");
-                                cardImage.className = "card-img-left img-fluid h-25";
-                                cardImage.src = "{% static './photos/fater_chor.png' %}";
-                                card.appendChild(cardImage);
+                                    var cardImage = document.createElement("img");
+                                    cardImage.className = "card-img-left img-fluid h-25";
+                                    cardImage.src = "{% static './photos/fater_chor.png' %}";
+                                    card.appendChild(cardImage);
 
-                                var cardBody = document.createElement("div");
-                                cardBody.className = "card-body";
+                                    var cardBody = document.createElement("div");
+                                    cardBody.className = "card-body";
 
-                                cardBody.innerHTML = "<h5 class='card-title'>" + suggestion['Hotel Name'] + "</h5>" +
-                                    "<p class='card-text'>" +
-                                    "Address: " + suggestion['Address'] + "<br>" +
-                                    "Phone Number: " + suggestion['Phone Number'] + "<br>" +
-                                    "Description: " + suggestion['Description'] + "<br>" +
-                                    "Facilities: " + suggestion['Facilities'] + "<br>" +
-                                    "Price Range (USD): " + suggestion['Min Price (USD)'] + '-' + suggestion['Max Price (USD)'] +
-                                    "</p>";
+                                    cardBody.innerHTML = "<h5 class='card-title'>" + suggestion.tags["name"] + "</h5>" +
+                                        "<p class='card-text'>" +
+                                        "Type: " + suggestion.tags["tourism"] + "<br>" +
+                                        "</p>";
 
-                                card.appendChild(cardBody);
-                                chatSuggestions.appendChild(card);
-                            }
-                        });
+                                    card.appendChild(cardBody);
+                                    chatSuggestions.appendChild(card);
+                                }
+                            });
+                        }
+
+                        document.getElementById("user-input").value = "";
+
+                    }else{
+                        // Remove the old data
+                        localStorage.removeItem('selectedHotels');
+                        
+                        // Add the new data
+                        localStorage.setItem('selectedHotels', JSON.stringify(response.suggestions));
+                        
+
+                        var chatSuggestions = document.getElementById("chat-suggestions");
+                        chatSuggestions.innerHTML = "";
+
+                        var chatMessages = document.getElementById("chat-messages");
+                        // chatMessages.innerHTML = "";
+
+                        var userMessage = document.createElement("div");
+                        userMessage.className = "message sent ml-5";
+                        userMessage.innerHTML = "<strong></strong> " + userInput;
+                        chatMessages.appendChild(userMessage);
+
+                        var chatSuggestions = document.getElementById("chat-suggestions");
+
+                        if (response.suggestions && response.suggestions.length > 0) {
+                            response.suggestions.forEach(function (suggestion) {
+                                var placeName = suggestion['Place Name'];
+
+                                if (!selectedPlaces.has(placeName)) {
+                                    var card = document.createElement("div");
+                                    card.className = "card mt-2";
+                                    // card.setAttribute("onclick", "addSelectedPlace('" + suggestion['Hotel Name'] + "')");
+
+                                    var cardImage = document.createElement("img");
+                                    cardImage.className = "card-img-left img-fluid h-25";
+                                    cardImage.src = "{% static './photos/fater_chor.png' %}";
+                                    card.appendChild(cardImage);
+
+                                    var cardBody = document.createElement("div");
+                                    cardBody.className = "card-body";
+
+                                    cardBody.innerHTML = "<h5 class='card-title'>" + suggestion['Hotel Name'] + "</h5>" +
+                                        "<p class='card-text'>" +
+                                        "Address: " + suggestion['Address'] + "<br>" +
+                                        "Phone Number: " + suggestion['Phone Number'] + "<br>" +
+                                        "Description: " + suggestion['Description'] + "<br>" +
+                                        "Facilities: " + suggestion['Facilities'] + "<br>" +
+                                        "Price Range (USD): " + suggestion['Min Price (USD)'] + '-' + suggestion['Max Price (USD)'] +
+                                        "</p>";
+
+                                    card.appendChild(cardBody);
+                                    chatSuggestions.appendChild(card);
+                                }
+                            });
+                        }
+
+                        document.getElementById("user-input").value = "";
+
+                        // saveSelectedPlacesToLocalStorage();
+
+                        toggleNextButtonVisibility();
                     }
 
-                    document.getElementById("user-input").value = "";
-
-                    saveSelectedPlacesToLocalStorage();
-
-                    toggleNextButtonVisibility();
                 }
             });
         }
