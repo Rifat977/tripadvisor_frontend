@@ -4,8 +4,8 @@
 <section class="place-main">
   <div class="src-chat container-fluid">
     <div class="src rounded-pill p-2">
-      <form action="#" class="mx-md-2 mb-0">
-        <input type="text" placeholder="where are you going? " class="srcbar" />
+      <form action="{% url 'find_place_chatbox' %}" method="GET" class="mx-md-2 mb-0">
+        <input name="userInput" type="text" placeholder="where are you going? " class="srcbar" />
         <input
           type="submit"
           value="Search"

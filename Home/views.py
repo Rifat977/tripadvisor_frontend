@@ -206,8 +206,7 @@ def sub_place_chatbox(request):
         if "," in place_location:
             place_location = place_location.split(",")[1]
 
-        filtered_places = Places.objects.filter(location__icontains=place_location)
-
+        filtered_places = Places.objects.filter(location__icontains=place_location)[:5]
 
         suggestions = [{'place_name': place.place_name,
                         'location': place.location,
@@ -216,6 +215,7 @@ def sub_place_chatbox(request):
                         'fee': place.fee,
                         'opening_hour': place.opening_hour,
                         } for place in filtered_places]
+
 
         print(place_location)
         print(suggestions)
@@ -226,10 +226,11 @@ def sub_place_chatbox(request):
 
 @csrf_exempt
 def find_place_chatbox(request):
-    file_path = 'main.csv'  
-    df = pd.read_csv(file_path)
     
     if request.method == 'POST':
+        file_path = 'main.csv'  
+        df = pd.read_csv(file_path)
+    
         user_message = request.POST.get('userInput', '')
 
         print(user_message)

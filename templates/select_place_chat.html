@@ -105,6 +105,20 @@
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const param1Value = urlParams.get('userInput');
+    if(param1Value){
+        var user_input = document.getElementById("user-input")
+        user_input.value = param1Value
+        var enterKeyEvent = new KeyboardEvent("keydown", { key: "Enter" });
+
+        var event = new KeyboardEvent('keydown', { keyCode: 13 });
+        user_input.dispatchEvent(event);
+
+    }
+
     localStorage.clear()
     var selectedPlaces = new Set();
 
